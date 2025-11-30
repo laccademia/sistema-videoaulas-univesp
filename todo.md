@@ -132,3 +132,10 @@
 - [x] Verificar gráficos e estatísticas (legibilidade) - CORRIGIDO: números mudados para text-foreground
 - [x] Testar visibilidade final em ambos os temas - VALIDADO: todos os números visíveis em ambos os modos
 - [x] Verificar se há outros elementos com problemas de contraste - VALIDADO: sem problemas encontrados
+
+
+## 🐛 Bug de Sobreposição de Textos
+
+- [x] Gráfico de pizza na página de Estatísticas: textos "Completas (todos): 0%" e "Com CC: 0%" sobrepostos - CORRIGIDO
+- [x] Ajustar posicionamento das labels do Recharts para evitar sobreposição - CORRIGIDO: labels com valor 0 agora ocultas
+- [x] Testar com diferentes valores para garantir que não há sobreposição - VALIDADO: sem sobreposição em ambos os temas
