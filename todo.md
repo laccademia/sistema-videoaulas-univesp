@@ -204,3 +204,13 @@
 - [x] Adicionar indicadores visuais de acessibilidade nas tabelas (Libras, Audiodescrição, CC)
 - [x] Testar navegação de disciplina → videoaulas com filtro aplicado)
 - [x] Validar layout de dashboard e tabelas agrupadas
+
+## 📊 Inserção de Dados Históricos (2024 e 2023)
+
+- [x] Identificar planilhas de videoaulas de 2024 e 2023 disponíveis
+- [x] Processar dados das planilhas 2024 (Geral + Bimestres + Acessibilidade)
+- [x] Processar dados das planilhas 2023 (Geral + Bimestres + Acessibilidade)
+- [x] Atualizar script de seed para incluir dados históricos
+- [x] Executar seed e popular banco de dados (224 videoaulas inseridas)
+- [x] Validar contagem total de videoaulas por ano (682 total: 458 de 2025 + 224 históricas)
+- [x] Testar dashboard com filtros de ano (2023, 2024, 2025)
