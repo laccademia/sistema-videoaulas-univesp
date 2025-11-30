@@ -139,3 +139,13 @@
 - [x] Gráfico de pizza na página de Estatísticas: textos "Completas (todos): 0%" e "Com CC: 0%" sobrepostos - CORRIGIDO
 - [x] Ajustar posicionamento das labels do Recharts para evitar sobreposição - CORRIGIDO: labels com valor 0 agora ocultas
 - [x] Testar com diferentes valores para garantir que não há sobreposição - VALIDADO: sem sobreposição em ambos os temas
+
+
+## 🐛 Bug de Fluxo de Navegação
+
+- [x] Página de Disciplinas não está funcionando corretamente - CORRIGIDO
+- [x] Fluxo Eixo → Curso → Disciplina não está claro - CORRIGIDO: filtros hierárquicos implementados
+- [x] Esclarecer hierarquia: Eixo (área) → Curso (graduação) → Disciplina (matéria) - IMPLEMENTADO
+- [x] Implementar navegação breadcrumb ou filtros hierárquicos - IMPLEMENTADO: 2 dropdowns + breadcrumb
+- [x] Adicionar informações de eixo e curso na listagem de disciplinas - IMPLEMENTADO: eixo visível em cada card
+- [x] Testar filtros e validar funcionamento - VALIDADO: filtros hierárquicos funcionando perfeitamente

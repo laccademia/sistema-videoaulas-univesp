@@ -1,0 +1,55 @@
+{
+  "query": "SELECT id, eixo, nome FROM cursos LIMIT 10",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4Q6CVQSvv4vsSx3.a0e54a3010e2 --database AgAQ7M7gXFHDiuyXgHyZLe --execute SELECT id, eixo, nome FROM cursos LIMIT 10",
+  "rows": [
+    {
+      "id": "1",
+      "eixo": "Negócios e Produção",
+      "nome": "Administração"
+    },
+    {
+      "id": "2",
+      "eixo": "Computação",
+      "nome": "Bacharelado em Ciência de Dados"
+    },
+    {
+      "id": "3",
+      "eixo": "Computação",
+      "nome": "Bacharelado em Engenharia de Computação"
+    },
+    {
+      "id": "4",
+      "eixo": "Computação",
+      "nome": "Bacharelado em Tecnologia da Informação"
+    },
+    {
+      "id": "5",
+      "eixo": "Negócios e Produção",
+      "nome": "Engenharia de Produção"
+    },
+    {
+      "id": "6",
+      "eixo": "Licenciatura",
+      "nome": "Letras"
+    },
+    {
+      "id": "7",
+      "eixo": "Licenciatura",
+      "nome": "Matemática"
+    },
+    {
+      "id": "8",
+      "eixo": "Licenciatura",
+      "nome": "Pedagogia"
+    },
+    {
+      "id": "9",
+      "eixo": "Negócios e Produção",
+      "nome": "Processos Gerenciais"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\teixo\tnome\n1\tNegócios e Produção\tAdministração\n2\tComputação\tBacharelado em Ciência de Dados\n3\tComputação\tBacharelado em Engenharia de Computação\n4\tComputação\tBacharelado em Tecnologia da Informação\n5\tNegócios e Produção\tEngenharia de Produção\n6\tLicenciatura\tLetras\n7\tLicenciatura\tMatemática\n8\tLicenciatura\tPedagogia\n9\tNegócios e Produção\tProcessos Gerenciais\n",
+  "stderr": "",
+  "execution_time_ms": 55
+}
