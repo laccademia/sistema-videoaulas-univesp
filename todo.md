@@ -94,12 +94,12 @@
 - [x] Testes unitários dos routers tRPC
 - [x] Testes de integração do banco de dados
 - [x] Validação de dados processados
-
 ## 📚 Documentação
-- [ ] README.md principal do projeto
-- [ ] Documentação da estrutura do banco de dados
-- [ ] Documentação da API (endpoints tRPC)
-- [ ] Documentação de instalação e configuração
+- [x] README.md principal do projeto
+- [x] Documentação da estrutura do banco de dados
+- [x] Documentação da API tRPC
+- [x] Guia de contribuição
+- [x] Documentação de deployração
 - [ ] Documentação de estrutura de pastas
 - [ ] Documentação de componentes do frontend
 - [ ] Guia de contribuição
