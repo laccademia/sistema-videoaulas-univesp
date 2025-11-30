@@ -120,19 +120,19 @@ export default function Estatisticas() {
                     </div>
                     <div>
                       <div className="text-sm font-medium mb-1">Com Libras</div>
-                      <div className="text-2xl font-bold text-chart-1">{acessibilidade?.comLibras || 0}</div>
+                      <div className="text-2xl font-bold text-foreground">{acessibilidade?.comLibras || 0}</div>
                     </div>
                     <div>
                       <div className="text-sm font-medium mb-1">Com Audiodescrição</div>
-                      <div className="text-2xl font-bold text-chart-2">{acessibilidade?.comAudiodescricao || 0}</div>
+                      <div className="text-2xl font-bold text-foreground">{acessibilidade?.comAudiodescricao || 0}</div>
                     </div>
                     <div>
                       <div className="text-sm font-medium mb-1">Com Legendas (CC)</div>
-                      <div className="text-2xl font-bold text-chart-3">{acessibilidade?.comCC || 0}</div>
+                      <div className="text-2xl font-bold text-foreground">{acessibilidade?.comCC || 0}</div>
                     </div>
                     <div>
                       <div className="text-sm font-medium mb-1">Acessibilidade Completa</div>
-                      <div className="text-2xl font-bold text-chart-4">{acessibilidade?.completas || 0}</div>
+                      <div className="text-2xl font-bold text-foreground">{acessibilidade?.completas || 0}</div>
                     </div>
                   </div>
                 </div>

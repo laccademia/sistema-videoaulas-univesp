@@ -82,7 +82,7 @@ export default function Home() {
                   <BookOpen className="h-5 w-5 text-secondary" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-3xl font-bold text-secondary">{stats?.totalDisciplinas || 0}</div>
+                  <div className="text-3xl font-bold text-foreground">{stats?.totalDisciplinas || 0}</div>
                   <p className="text-xs text-muted-foreground mt-1">
                     Áreas de conhecimento
                   </p>
@@ -97,7 +97,7 @@ export default function Home() {
                   <GraduationCap className="h-5 w-5 text-accent" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-3xl font-bold text-accent">{stats?.totalCursos || 0}</div>
+                  <div className="text-3xl font-bold text-foreground">{stats?.totalCursos || 0}</div>
                   <p className="text-xs text-muted-foreground mt-1">
                     Graduações oferecidas
                   </p>
@@ -112,7 +112,7 @@ export default function Home() {
                   <Users className="h-5 w-5 text-chart-4" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-3xl font-bold text-chart-4">{stats?.totalProfessores || 0}</div>
+                  <div className="text-3xl font-bold text-foreground">{stats?.totalProfessores || 0}</div>
                   <p className="text-xs text-muted-foreground mt-1">
                     Educadores envolvidos
                   </p>
@@ -159,7 +159,7 @@ export default function Home() {
                 <CardDescription>Narração descritiva</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="text-3xl font-bold text-secondary mb-1">
+                <div className="text-3xl font-bold text-foreground mb-1">
                   {acessibilidade?.comAudiodescricao || 0}
                 </div>
                 <p className="text-sm text-muted-foreground">
@@ -177,7 +177,7 @@ export default function Home() {
                 <CardDescription>Closed Captions</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="text-3xl font-bold text-accent mb-1">
+                <div className="text-3xl font-bold text-foreground mb-1">
                   {acessibilidade?.comCC || 0}
                 </div>
                 <p className="text-sm text-muted-foreground">

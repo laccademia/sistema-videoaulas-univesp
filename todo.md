@@ -121,3 +121,14 @@
 - [x] Validar integridade dos dados após correção
 - [x] Testar todas as páginas com dados reais
 - [x] Criar testes unitários para validação (20/20 passando)
+
+
+## 🎨 Bugs de Contraste e Visibilidade (Tema Claro/Escuro)
+
+- [x] Números "372" e "9" invisíveis no modo escuro (cards de Disciplinas e Cursos) - CORRIGIDO: mudado para text-foreground
+- [x] Textos sobrepostos nos cards da home - CORRIGIDO: ajustado contraste
+- [x] Verificar contraste de todas as páginas no modo escuro - CORRIGIDO: todos os números agora usam text-foreground
+- [x] Verificar contraste de todas as páginas no modo claro - OK: já estava legível
+- [x] Verificar gráficos e estatísticas (legibilidade) - CORRIGIDO: números mudados para text-foreground
+- [x] Testar visibilidade final em ambos os temas - VALIDADO: todos os números visíveis em ambos os modos
+- [x] Verificar se há outros elementos com problemas de contraste - VALIDADO: sem problemas encontrados
