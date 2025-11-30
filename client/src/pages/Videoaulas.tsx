@@ -22,7 +22,6 @@ export default function Videoaulas() {
       item.videoaula.titulo.toLowerCase().includes(search) ||
       item.videoaula.sinopse?.toLowerCase().includes(search) ||
       item.disciplina?.nome.toLowerCase().includes(search) ||
-      item.curso?.nome.toLowerCase().includes(search) ||
       item.professor?.nome.toLowerCase().includes(search)
     );
   }, [videoaulas?.items, searchTerm]);
@@ -40,7 +39,7 @@ export default function Videoaulas() {
           <div className="relative max-w-2xl">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
-              placeholder="Buscar por título, disciplina, curso ou professor..."
+              placeholder="Buscar por título, disciplina ou professor..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="pl-10"
@@ -72,7 +71,7 @@ export default function Videoaulas() {
                             {item.videoaula.titulo}
                           </CardTitle>
                           <CardDescription className="text-xs line-clamp-1">
-                            {item.disciplina?.nome} • {item.curso?.nome}
+                            {item.disciplina?.codigo} - {item.disciplina?.nome}
                           </CardDescription>
                         </div>
                       </div>

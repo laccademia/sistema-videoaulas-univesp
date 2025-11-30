@@ -134,9 +134,12 @@ export const appRouter = router({
         
         let filtered = videoaulas;
         
-        // Filtrar por curso
+        // NOTA: Filtro por curso removido temporariamente
+        // Disciplinas agora podem pertencer a múltiplos cursos (many-to-many)
+        // TODO: Implementar filtro usando cursosDisciplinas
         if (input.cursoId) {
-          filtered = filtered.filter(v => v.curso?.id === input.cursoId);
+          // filtered = filtered.filter(v => v.curso?.id === input.cursoId);
+          console.warn('Filtro por curso não implementado ainda');
         }
         
         // Filtrar por disciplina
@@ -216,17 +219,18 @@ export const appRouter = router({
     }),
     
     porCurso: publicProcedure.query(async () => {
-      const videoaulas = await getVideoaulasComDetalhes();
+      // NOTA: Estatísticas por curso removidas temporariamente
+      // Disciplinas agora podem pertencer a múltiplos cursos (many-to-many)
+      // TODO: Implementar usando cursosDisciplinas
       const cursos = await getAllCursos();
       
       return cursos.map(curso => {
-        const videoaulasCurso = videoaulas.filter(v => v.curso?.id === curso.id);
         return {
           curso,
-          total: videoaulasCurso.length,
-          comLibras: videoaulasCurso.filter(v => v.videoaula.linkLibras).length,
-          comAudiodescricao: videoaulasCurso.filter(v => v.videoaula.linkAudiodescricao).length,
-          comCC: videoaulasCurso.filter(v => v.videoaula.ccLegenda).length,
+          total: 0,
+          comLibras: 0,
+          comAudiodescricao: 0,
+          comCC: 0,
         };
       });
     }),

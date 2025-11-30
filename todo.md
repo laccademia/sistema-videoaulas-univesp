@@ -183,11 +183,11 @@
 - [x] Modificar schema do banco de dados - IMPLEMENTADO e migrations aplicadas
 - [x] Atualizar helpers de banco de dados (db.ts) - IMPLEMENTADO
 - [x] Reprocessar CSVs de disciplinas mantendo múltiplas associações - CONCLUÍDO: 206 disciplinas únicas + 372 associações
-- [ ] Atualizar script de seed - EM PROGRESSO
-- [ ] Limpar e repopular banco de dados - PENDENTE
+- [x] Atualizar script de seed - CONCLUÍDO
+- [x] Limpar e repopular banco de dados - CONCLUÍDO (206 disciplinas + 372 associações + 458 videoaulas)
 - [ ] Desabilitar navegação para detalhes da disciplina temporariamente - PENDENTE
-- [ ] Atualizar routers para usar nova estrutura - PENDENTE (remover campo 'curso' de getVideoaulasComDetalhes)
-- [ ] Atualizar frontend (Videoaulas.tsx) para não usar campo 'curso' - PENDENTE
-- [ ] Testar e validar contagem correta - PENDENTE
+- [x] Atualizar routers para usar nova estrutura - CONCLUÍDO (campo 'curso' removido, filtros desabilitados temporariamente)
+- [x] Atualizar frontend (Videoaulas.tsx, VideoaulaDetalhes.tsx, Disciplinas.tsx) para não usar campo 'curso' - CONCLUÍDO
+- [x] Testar e validar contagem correta - VALIDADO: todos os cursos com número correto de disciplinas (43, 43, 50, 32, 53, 36, 41, 41, 33)
 
 **NOTA:** Checkpoint intermediário salvo. Próximos passos: atualizar seed.ts, routers.ts e frontend.

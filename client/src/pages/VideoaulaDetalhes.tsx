@@ -40,7 +40,7 @@ export default function VideoaulaDetalhes() {
     );
   }
 
-  const { videoaula: v, disciplina, curso, professor, di } = videoaula;
+  const { videoaula: v, disciplina, professor, di } = videoaula;
 
   return (
     <Layout>
@@ -58,7 +58,7 @@ export default function VideoaulaDetalhes() {
             <div>
               <h1 className="text-3xl font-bold mb-2">{v.titulo}</h1>
               <p className="text-muted-foreground">
-                {disciplina?.nome} • {curso?.nome}
+                {disciplina?.codigo} - {disciplina?.nome}
               </p>
             </div>
 

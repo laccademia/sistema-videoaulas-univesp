@@ -147,12 +147,9 @@ export default function Disciplinas() {
                 </CardHeader>
                 <CardContent>
                   <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                    <div className="flex items-center gap-1">
+                    <div className="flex items-center gap-1.5">
                       <Clock className="h-3 w-3" />
                       <span>{item.disciplina.cargaHoraria}h</span>
-                    </div>
-                    <div>
-                      Ano {item.disciplina.anoCurso} • Bim. {item.disciplina.bimestrePedagogico}
                     </div>
                   </div>
                 </CardContent>

@@ -7,6 +7,7 @@ import { join } from 'path';
 import {
   insertCurso,
   insertDisciplina,
+  insertCursoDisciplina,
   insertProfessor,
   insertDesignerInstrucional,
   insertOfertaDisciplina,
@@ -35,27 +36,58 @@ async function seedCursos() {
 }
 
 async function seedDisciplinas() {
-  console.log('📖 Populando disciplinas...');
+  console.log('📖 Populando disciplinas únicas...');
   const disciplinasData = JSON.parse(readFileSync(join(DADOS_DIR, 'disciplinas.json'), 'utf-8'));
   
   for (const disciplina of disciplinasData) {
-    const curso = await getCursoByNome(disciplina.curso);
-    if (!curso) {
-      console.warn(`⚠️  Curso não encontrado: ${disciplina.curso}`);
-      continue;
-    }
-    
     await insertDisciplina({
       codigo: disciplina.codigo,
       nome: disciplina.nome,
       cargaHoraria: disciplina.carga_horaria,
-      anoCurso: disciplina.ano_curso,
-      bimestrePedagogico: disciplina.bimestre_pedagogico,
-      cursoId: curso.id,
     });
   }
   
-  console.log(`✅ ${disciplinasData.length} disciplinas inseridas`);
+  console.log(`✅ ${disciplinasData.length} disciplinas únicas inseridas`);
+}
+
+async function seedCursosDisciplinas() {
+  console.log('🔗 Populando associações cursos-disciplinas...');
+  const cursosDisciplinasData = JSON.parse(readFileSync(join(DADOS_DIR, 'cursos_disciplinas.json'), 'utf-8'));
+  
+  let inseridas = 0;
+  let erros = 0;
+  
+  for (const assoc of cursosDisciplinasData) {
+    try {
+      const curso = await getCursoByNome(assoc.curso);
+      if (!curso) {
+        console.warn(`⚠️  Curso não encontrado: ${assoc.curso}`);
+        erros++;
+        continue;
+      }
+      
+      const disciplina = await getDisciplinaByCodigo(assoc.codigo_disciplina);
+      if (!disciplina) {
+        console.warn(`⚠️  Disciplina não encontrada: ${assoc.codigo_disciplina}`);
+        erros++;
+        continue;
+      }
+      
+      await insertCursoDisciplina({
+        cursoId: curso.id,
+        disciplinaId: disciplina.id,
+        anoCurso: assoc.ano_curso,
+        bimestrePedagogico: assoc.bimestre_pedagogico,
+      });
+      
+      inseridas++;
+    } catch (error) {
+      console.error(`❌ Erro ao inserir associação ${assoc.curso} - ${assoc.codigo_disciplina}:`, error);
+      erros++;
+    }
+  }
+  
+  console.log(`✅ ${inseridas} associações inseridas (${erros} erros)`);
 }
 
 async function seedProfessores() {
@@ -101,16 +133,20 @@ async function seedVideoaulas() {
         continue;
       }
       
-      // Buscar ou criar professor
-      let professor = null;
-      if (videoaula.professor) {
-        professor = await getProfessorByNome(videoaula.professor);
+      // Buscar professor
+      const professor = await getProfessorByNome(videoaula.professor);
+      if (!professor) {
+        console.warn(`⚠️  Professor não encontrado: ${videoaula.professor}`);
+        erros++;
+        continue;
       }
       
-      // Buscar ou criar DI
-      let di = null;
-      if (videoaula.di && videoaula.di !== 'AUTOINSTRUCIONAL') {
-        di = await getDesignerInstrucionalByNome(videoaula.di);
+      // Buscar DI
+      const di = await getDesignerInstrucionalByNome(videoaula.di);
+      if (!di) {
+        console.warn(`⚠️  DI não encontrado: ${videoaula.di}`);
+        erros++;
+        continue;
       }
       
       // Buscar ou criar oferta
@@ -121,16 +157,15 @@ async function seedVideoaulas() {
       );
       
       if (!oferta) {
-        const result = await insertOfertaDisciplina({
+        await insertOfertaDisciplina({
           disciplinaId: disciplina.id,
           ano: videoaula.ano,
           bimestreOperacional: videoaula.bimestre_operacional,
-          professorId: professor?.id || null,
-          diId: di?.id || null,
-          tipo: 'OFERTA',
+          professorId: professor.id,
+          diId: di.id,
+          tipo: videoaula.tipo_oferta || 'Oferta',
         });
         
-        // Buscar a oferta recém-criada
         oferta = await getOfertaByDisciplinaAnoEBimestre(
           disciplina.id,
           videoaula.ano,
@@ -139,7 +174,7 @@ async function seedVideoaulas() {
       }
       
       if (!oferta) {
-        console.warn(`⚠️  Não foi possível criar oferta para disciplina ${videoaula.codigo_disciplina}`);
+        console.warn(`⚠️  Não foi possível criar oferta para disciplina ${disciplina.codigo}`);
         erros++;
         continue;
       }
@@ -150,58 +185,43 @@ async function seedVideoaulas() {
         semana: videoaula.semana,
         numeroAula: videoaula.numero_aula,
         titulo: videoaula.titulo,
-        sinopse: videoaula.sinopse || null,
-        linkYoutubeOriginal: videoaula.link_youtube_original || null,
-        slidesDisponivel: videoaula.slides_disponivel,
-        status: videoaula.status || null,
-        idTvCultura: videoaula.id_tv_cultura || null,
-        duracaoMinutos: videoaula.duracao_minutos || null,
-        linkLibras: videoaula.link_libras || null,
-        linkAudiodescricao: videoaula.link_audiodescricao || null,
-        ccLegenda: videoaula.cc_legenda,
-        linkDownload: videoaula.link_download || null,
+        sinopse: videoaula.sinopse,
+        linkYoutubeOriginal: videoaula.link_youtube_original,
+        slidesDisponivel: videoaula.slides_disponivel === true || videoaula.slides_disponivel === 'true',
+        status: videoaula.status || 'Publicada',
+        idTvCultura: videoaula.id_tv_cultura,
+        duracaoMinutos: videoaula.duracao_minutos,
+        linkLibras: videoaula.link_libras,
+        linkAudiodescricao: videoaula.link_audiodescricao,
+        ccLegenda: videoaula.cc_legenda === true || videoaula.cc_legenda === 'true',
+        linkDownload: videoaula.link_download,
       });
       
       inseridas++;
-      
-      if (inseridas % 50 === 0) {
-        console.log(`  📊 Progresso: ${inseridas}/${videoaulasData.length} videoaulas inseridas`);
-      }
     } catch (error) {
-      console.error(`❌ Erro ao inserir videoaula "${videoaula.titulo}":`, error);
+      console.error(`❌ Erro ao inserir videoaula ${videoaula.titulo}:`, error);
       erros++;
     }
   }
   
-  console.log(`✅ ${inseridas} videoaulas inseridas com sucesso`);
-  if (erros > 0) {
-    console.log(`⚠️  ${erros} erros durante a inserção`);
-  }
+  console.log(`✅ ${inseridas} videoaulas inseridas (${erros} erros)`);
 }
 
 async function main() {
-  console.log('=' .repeat(60));
-  console.log('🚀 SEED DO BANCO DE DADOS - SISTEMA VIDEOAULAS UNIVESP');
-  console.log('=' .repeat(60));
-  console.log('');
+  console.log('🚀 Iniciando seed do banco de dados...\n');
   
   try {
     await seedCursos();
     await seedDisciplinas();
+    await seedCursosDisciplinas(); // Nova função para popular associações
     await seedProfessores();
     await seedDesignersInstrucionais();
     await seedVideoaulas();
     
-    console.log('');
-    console.log('=' .repeat(60));
-    console.log('✅ SEED CONCLUÍDO COM SUCESSO!');
-    console.log('=' .repeat(60));
+    console.log('\n✅ Seed concluído com sucesso!');
+    process.exit(0);
   } catch (error) {
-    console.error('');
-    console.error('=' .repeat(60));
-    console.error('❌ ERRO DURANTE O SEED:');
-    console.error(error);
-    console.error('=' .repeat(60));
+    console.error('\n❌ Erro durante seed:', error);
     process.exit(1);
   }
 }
