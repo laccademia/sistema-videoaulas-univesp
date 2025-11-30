@@ -108,3 +108,16 @@
 - [ ] Criar checkpoint final
 - [ ] Publicar no GitHub
 - [ ] Preparar para deploy
+
+
+## 🐛 Bugs Reportados pelo Usuário
+
+- [x] Página de Professores não está mostrando nomes dos professores - IDENTIFICADO: fórmulas VLOOKUP não resolvidas
+- [x] Página de Designers Instrucionais mostrando apenas números - IDENTIFICADO: coluna DI vazia na maioria das linhas
+- [x] Anos das videoaulas estão incorretos - IDENTIFICADO: estrutura da planilha mal interpretada
+- [x] Revisar e corrigir dados nas planilhas originais - ENTENDIDO: células mescladas requerem forward fill
+- [x] Reprocessar dados com lógica correta (Geral + Bimestres + Acessibilidade)
+- [x] Repopular banco de dados com dados corrigidos
+- [x] Validar integridade dos dados após correção
+- [x] Testar todas as páginas com dados reais
+- [x] Criar testes unitários para validação (20/20 passando)
