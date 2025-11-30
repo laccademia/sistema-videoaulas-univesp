@@ -34,22 +34,35 @@ export type Curso = typeof cursos.$inferSelect;
 export type InsertCurso = typeof cursos.$inferInsert;
 
 /**
- * Tabela de disciplinas
+ * Tabela de disciplinas (sem cursoId - relacionamento many-to-many)
  */
 export const disciplinas = mysqlTable("disciplinas", {
   id: int("id").autoincrement().primaryKey(),
   codigo: varchar("codigo", { length: 50 }).notNull().unique(),
   nome: varchar("nome", { length: 500 }).notNull(),
   cargaHoraria: int("cargaHoraria").notNull().default(0),
-  anoCurso: int("anoCurso").notNull().default(1),
-  bimestrePedagogico: int("bimestrePedagogico").notNull().default(1),
-  cursoId: int("cursoId").notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 });
 
 export type Disciplina = typeof disciplinas.$inferSelect;
 export type InsertDisciplina = typeof disciplinas.$inferInsert;
+
+/**
+ * Tabela de relacionamento many-to-many entre cursos e disciplinas
+ */
+export const cursosDisciplinas = mysqlTable("cursosDisciplinas", {
+  id: int("id").autoincrement().primaryKey(),
+  cursoId: int("cursoId").notNull(),
+  disciplinaId: int("disciplinaId").notNull(),
+  anoCurso: int("anoCurso").notNull().default(1),
+  bimestrePedagogico: int("bimestrePedagogico").notNull().default(1),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type CursoDisciplina = typeof cursosDisciplinas.$inferSelect;
+export type InsertCursoDisciplina = typeof cursosDisciplinas.$inferInsert;
 
 /**
  * Tabela de professores
@@ -125,15 +138,23 @@ export type InsertVideoaula = typeof videoaulas.$inferInsert;
  * Relações entre tabelas
  */
 export const cursosRelations = relations(cursos, ({ many }) => ({
-  disciplinas: many(disciplinas),
+  cursosDisciplinas: many(cursosDisciplinas),
 }));
 
-export const disciplinasRelations = relations(disciplinas, ({ one, many }) => ({
+export const disciplinasRelations = relations(disciplinas, ({ many }) => ({
+  cursosDisciplinas: many(cursosDisciplinas),
+  ofertas: many(ofertasDisciplinas),
+}));
+
+export const cursosDisciplinasRelations = relations(cursosDisciplinas, ({ one }) => ({
   curso: one(cursos, {
-    fields: [disciplinas.cursoId],
+    fields: [cursosDisciplinas.cursoId],
     references: [cursos.id],
   }),
-  ofertas: many(ofertasDisciplinas),
+  disciplina: one(disciplinas, {
+    fields: [cursosDisciplinas.disciplinaId],
+    references: [disciplinas.id],
+  }),
 }));
 
 export const professoresRelations = relations(professores, ({ many }) => ({

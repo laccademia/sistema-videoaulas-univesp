@@ -169,3 +169,25 @@
 - [x] Identificar onde está o nested anchor (breadcrumb + card de disciplina) - IDENTIFICADO: breadcrumb
 - [x] Substituir Card wrapper por div com onClick em vez de Link - CORRIGIDO: removido <a> de dentro de <Link>
 - [x] Testar e validar correção - VALIDADO: sem erros no console
+
+
+## 🐛 Bugs de Associação de Disciplinas
+
+- [x] Número de disciplinas por curso está incorreto (mostrando 11 quando deveria ser muito mais) - IDENTIFICADO
+- [x] Lógica de associação não considera disciplinas compartilhadas entre cursos - IDENTIFICADO
+- [x] Lógica não considera disciplinas comuns a todos os eixos - IDENTIFICADO
+- [x] Lógica não considera disciplinas únicas de cada curso - IDENTIFICADO
+- [x] Erro ao clicar no card da disciplina na página do curso - IDENTIFICADO
+- [x] Revisar documento de instruções sobre estrutura de disciplinas - REVISADO
+- [x] Criar tabela de relacionamento many-to-many (cursos_disciplinas) - IMPLEMENTADO
+- [x] Modificar schema do banco de dados - IMPLEMENTADO e migrations aplicadas
+- [x] Atualizar helpers de banco de dados (db.ts) - IMPLEMENTADO
+- [x] Reprocessar CSVs de disciplinas mantendo múltiplas associações - CONCLUÍDO: 206 disciplinas únicas + 372 associações
+- [ ] Atualizar script de seed - EM PROGRESSO
+- [ ] Limpar e repopular banco de dados - PENDENTE
+- [ ] Desabilitar navegação para detalhes da disciplina temporariamente - PENDENTE
+- [ ] Atualizar routers para usar nova estrutura - PENDENTE (remover campo 'curso' de getVideoaulasComDetalhes)
+- [ ] Atualizar frontend (Videoaulas.tsx) para não usar campo 'curso' - PENDENTE
+- [ ] Testar e validar contagem correta - PENDENTE
+
+**NOTA:** Checkpoint intermediário salvo. Próximos passos: atualizar seed.ts, routers.ts e frontend.

@@ -1,0 +1,46 @@
+{
+  "query": "SELECT c.nome AS curso, COUNT(d.id) AS total_disciplinas\nFROM cursos c\nLEFT JOIN disciplinas d ON d.cursoId = c.id\nGROUP BY c.id, c.nome\nORDER BY c.nome;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4Q6CVQSvv4vsSx3.a0e54a3010e2 --database AgAQ7M7gXFHDiuyXgHyZLe --execute SELECT c.nome AS curso, COUNT(d.id) AS total_disciplinas\nFROM cursos c\nLEFT JOIN disciplinas d ON d.cursoId = c.id\nGROUP BY c.id, c.nome\nORDER BY c.nome;",
+  "rows": [
+    {
+      "curso": "Administração",
+      "total_disciplinas": "11"
+    },
+    {
+      "curso": "Bacharelado em Ciência de Dados",
+      "total_disciplinas": "11"
+    },
+    {
+      "curso": "Bacharelado em Engenharia de Computação",
+      "total_disciplinas": "19"
+    },
+    {
+      "curso": "Bacharelado em Tecnologia da Informação",
+      "total_disciplinas": "25"
+    },
+    {
+      "curso": "Engenharia de Produção",
+      "total_disciplinas": "35"
+    },
+    {
+      "curso": "Letras",
+      "total_disciplinas": "17"
+    },
+    {
+      "curso": "Matemática",
+      "total_disciplinas": "20"
+    },
+    {
+      "curso": "Pedagogia",
+      "total_disciplinas": "35"
+    },
+    {
+      "curso": "Processos Gerenciais",
+      "total_disciplinas": "33"
+    }
+  ],
+  "messages": [],
+  "stdout": "curso\ttotal_disciplinas\nAdministração\t11\nBacharelado em Ciência de Dados\t11\nBacharelado em Engenharia de Computação\t19\nBacharelado em Tecnologia da Informação\t25\nEngenharia de Produção\t35\nLetras\t17\nMatemática\t20\nPedagogia\t35\nProcessos Gerenciais\t33\n",
+  "stderr": "",
+  "execution_time_ms": 71
+}

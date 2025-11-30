@@ -5,12 +5,14 @@ import {
   users,
   cursos,
   disciplinas,
+  cursosDisciplinas,
   professores,
   designersInstrucionais,
   ofertasDisciplinas,
   videoaulas,
   InsertCurso,
   InsertDisciplina,
+  InsertCursoDisciplina,
   InsertProfessor,
   InsertDesignerInstrucional,
   InsertOfertaDisciplina,
@@ -155,11 +157,15 @@ export async function insertDisciplina(disciplina: InsertDisciplina) {
     set: { 
       nome: disciplina.nome,
       cargaHoraria: disciplina.cargaHoraria,
-      anoCurso: disciplina.anoCurso,
-      bimestrePedagogico: disciplina.bimestrePedagogico,
-      cursoId: disciplina.cursoId
     }
   });
+}
+
+export async function insertCursoDisciplina(cursoDisciplina: InsertCursoDisciplina) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  await db.insert(cursosDisciplinas).values(cursoDisciplina);
 }
 
 export async function getAllDisciplinas() {
@@ -181,7 +187,21 @@ export async function getDisciplinasByCursoId(cursoId: number) {
   const db = await getDb();
   if (!db) return [];
   
-  return await db.select().from(disciplinas).where(eq(disciplinas.cursoId, cursoId));
+  // Buscar através da tabela de relacionamento
+  const result = await db
+    .select({
+      disciplina: disciplinas,
+      cursoDisciplina: cursosDisciplinas,
+    })
+    .from(cursosDisciplinas)
+    .innerJoin(disciplinas, eq(cursosDisciplinas.disciplinaId, disciplinas.id))
+    .where(eq(cursosDisciplinas.cursoId, cursoId));
+  
+  return result.map(r => ({
+    ...r.disciplina,
+    anoCurso: r.cursoDisciplina.anoCurso,
+    bimestrePedagogico: r.cursoDisciplina.bimestrePedagogico,
+  }));
 }
 
 // ============================================
@@ -301,19 +321,19 @@ export async function getVideoaulasComDetalhes() {
   const db = await getDb();
   if (!db) return [];
   
+  // Nota: Como disciplinas agora podem ter múltiplos cursos, não incluimos curso aqui
+  // O curso deve ser obtido via cursosDisciplinas quando necessário
   return await db
     .select({
       videoaula: videoaulas,
       oferta: ofertasDisciplinas,
       disciplina: disciplinas,
-      curso: cursos,
       professor: professores,
       di: designersInstrucionais,
     })
     .from(videoaulas)
     .leftJoin(ofertasDisciplinas, eq(videoaulas.ofertaDisciplinaId, ofertasDisciplinas.id))
     .leftJoin(disciplinas, eq(ofertasDisciplinas.disciplinaId, disciplinas.id))
-    .leftJoin(cursos, eq(disciplinas.cursoId, cursos.id))
     .leftJoin(professores, eq(ofertasDisciplinas.professorId, professores.id))
     .leftJoin(designersInstrucionais, eq(ofertasDisciplinas.diId, designersInstrucionais.id))
     .orderBy(desc(videoaulas.id));
@@ -323,13 +343,16 @@ export async function getDisciplinasComCurso() {
   const db = await getDb();
   if (!db) return [];
   
+  // Buscar disciplinas com seus cursos através da tabela de relacionamento
   return await db
     .select({
       disciplina: disciplinas,
       curso: cursos,
+      cursoDisciplina: cursosDisciplinas,
     })
     .from(disciplinas)
-    .leftJoin(cursos, eq(disciplinas.cursoId, cursos.id));
+    .leftJoin(cursosDisciplinas, eq(disciplinas.id, cursosDisciplinas.disciplinaId))
+    .leftJoin(cursos, eq(cursosDisciplinas.cursoId, cursos.id));
 }
 
 // ============================================
