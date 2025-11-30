@@ -133,7 +133,7 @@ export default function CursoDetalhes() {
                 <Card
                   key={disciplina.id}
                   className="hover:shadow-lg transition-all duration-300 hover:border-primary/50 cursor-pointer group"
-                  onClick={() => setLocation(`/disciplinas/${disciplina.id}`)}
+                  onClick={() => setLocation(`/videoaulas?disciplina=${disciplina.codigo}`)}
                 >
                   <CardHeader>
                     <div className="flex items-start justify-between">

@@ -193,3 +193,14 @@
 **NOTA:** Checkpoint intermediário salvo. Próximos passos: atualizar seed.ts, routers.ts e frontend.
 
 - [x] Corrigir erro de chaves duplicadas na página /disciplinas (disciplina ID 60032 aparece duplicada) - CORRIGIDO: getDisciplinasComCurso agora agrupa disciplinas únicas com array de cursos
+
+## 🎯 Redesign da Página de Videoaulas (Dashboard)
+
+- [x] Tornar cards de disciplina clicáveis (navegação para /videoaulas com filtro pré-aplicado)
+- [x] Criar componente de estatísticas do dashboard (total, por ano, por bimestre, acessibilidade)
+- [x] Criar barra de busca avançada (ano, bimestre, disciplina, código, ID TV Univesp)
+- [x] Redesenhar visualização: remover cards, criar tabelas agrupadas por bimestre
+- [x] Implementar tabelas com estrutura da planilha original (colunas: Semana, Aula, Título, Sinopse, etc.)
+- [x] Adicionar indicadores visuais de acessibilidade nas tabelas (Libras, Audiodescrição, CC)
+- [x] Testar navegação de disciplina → videoaulas com filtro aplicado)
+- [x] Validar layout de dashboard e tabelas agrupadas
