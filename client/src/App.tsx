@@ -6,6 +6,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
 import Cursos from "./pages/Cursos";
+import CursoDetalhes from "./pages/CursoDetalhes";
 import Disciplinas from "./pages/Disciplinas";
 import Videoaulas from "./pages/Videoaulas";
 import VideoaulaDetalhes from "./pages/VideoaulaDetalhes";
@@ -18,6 +19,7 @@ function Router() {
     <Switch>
       <Route path={"/"} component={Home} />
       <Route path={"/cursos"} component={Cursos} />
+      <Route path={"/cursos/:id"} component={CursoDetalhes} />
       <Route path={"/disciplinas"} component={Disciplinas} />
       <Route path={"/videoaulas"} component={Videoaulas} />
       <Route path={"/videoaulas/:id"} component={VideoaulaDetalhes} />

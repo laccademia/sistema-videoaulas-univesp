@@ -149,3 +149,15 @@
 - [x] Implementar navegação breadcrumb ou filtros hierárquicos - IMPLEMENTADO: 2 dropdowns + breadcrumb
 - [x] Adicionar informações de eixo e curso na listagem de disciplinas - IMPLEMENTADO: eixo visível em cada card
 - [x] Testar filtros e validar funcionamento - VALIDADO: filtros hierárquicos funcionando perfeitamente
+
+
+## 🐛 Bug de Página de Detalhes do Curso
+
+- [x] Ao clicar em um curso, página não existe (erro 404) - CORRIGIDO
+- [x] Criar página de detalhes do curso (/cursos/:id) - IMPLEMENTADO
+- [x] Listar todas as disciplinas do curso - IMPLEMENTADO
+- [x] Mostrar informações do curso (nome, eixo, descrição) - IMPLEMENTADO
+- [x] Adicionar estatísticas do curso (total de disciplinas, videoaulas) - IMPLEMENTADO
+- [x] Implementar navegação breadcrumb (Início → Cursos → [Nome do Curso]) - IMPLEMENTADO
+- [x] Adicionar rota no App.tsx - IMPLEMENTADO
+- [x] Testar navegação e validar funcionamento - VALIDADO: página funcionando perfeitamente
