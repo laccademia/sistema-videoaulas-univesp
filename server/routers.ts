@@ -306,6 +306,38 @@ export const appRouter = router({
       return stats;
     }),
     
+    porAnoBimestre: publicProcedure.query(async () => {
+      const videoaulas = await getVideoaulasComDetalhes();
+      
+      // Agrupar por ano e bimestre
+      const anosBimestresMap = new Map<number, { [key: string]: number }>();
+      
+      videoaulas.forEach(v => {
+        const ano = v.oferta?.ano;
+        const bimestre = v.oferta?.bimestreOperacional;
+        
+        if (ano && bimestre) {
+          if (!anosBimestresMap.has(ano)) {
+            anosBimestresMap.set(ano, { bim1: 0, bim2: 0, bim3: 0, bim4: 0 });
+          }
+          
+          const bimestreKey = `bim${bimestre}`;
+          const anoData = anosBimestresMap.get(ano)!;
+          anoData[bimestreKey] = (anoData[bimestreKey] || 0) + 1;
+        }
+      });
+      
+      // Converter para array e ordenar por ano
+      const stats = Array.from(anosBimestresMap.entries())
+        .map(([ano, bimestres]) => ({
+          ano,
+          ...bimestres,
+        }))
+        .sort((a, b) => a.ano - b.ano);
+      
+      return stats;
+    }),
+    
     porStatus: publicProcedure.query(async () => {
       const videoaulas = await getVideoaulasComDetalhes();
       

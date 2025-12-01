@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { trpc } from "@/lib/trpc";
 import { Video, BookOpen, GraduationCap, Users, Eye, Volume2, Subtitles, TrendingUp, Calendar, BarChart3, PieChart as PieChartIcon } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
-import { LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 export default function Home() {
   const { data: stats, isLoading } = trpc.stats.overview.useQuery();
@@ -11,6 +11,7 @@ export default function Home() {
   const { data: porBimestre } = trpc.stats.porBimestre.useQuery();
   const { data: porCurso } = trpc.stats.porCurso.useQuery();
   const { data: porAno } = trpc.stats.porAno.useQuery();
+  const { data: porAnoBimestre } = trpc.stats.porAnoBimestre.useQuery();
 
   return (
     <Layout>
@@ -93,7 +94,7 @@ export default function Home() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-lg">
                   <PieChartIcon className="h-5 w-5 text-[var(--neon-purple)]" />
-                  Distribuição por Curso
+                  Distribuição de Videoaulas por Curso
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -104,11 +105,10 @@ export default function Home() {
                         data={porCurso.map(c => ({ name: c.curso.nome, value: c.total }))}
                         cx="50%"
                         cy="50%"
-                        labelLine={false}
-                        label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
                         outerRadius={80}
                         fill="#8884d8"
                         dataKey="value"
+                        label={false}
                       >
                         {porCurso.map((entry, index) => {
                           const colors = [
@@ -128,8 +128,18 @@ export default function Home() {
                       <Tooltip
                         contentStyle={{
                           backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                          border: '1px solid var(--neon-cyan)',
+                          border: '1px solid var(--neon-purple)',
                           borderRadius: '8px',
+                        }}
+                      />
+                      <Legend
+                        verticalAlign="middle"
+                        align="right"
+                        layout="vertical"
+                        iconType="circle"
+                        wrapperStyle={{
+                          paddingLeft: '20px',
+                          fontSize: '12px',
                         }}
                       />
                     </PieChart>
@@ -145,7 +155,7 @@ export default function Home() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-lg">
                   <TrendingUp className="h-5 w-5 text-[var(--neon-green)]" />
-                  Evolução Temporal
+                  Evolução Temporal de Videoaulas
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -186,35 +196,43 @@ export default function Home() {
             </Card>
           </div>
 
-          {/* Videoaulas por Bimestre */}
+          {/* Videoaulas por Ano e Bimestre */}
           <div className="grid grid-cols-1 gap-6 mb-8">
             <Card className="bg-card/50 backdrop-blur-sm neon-border-cyan">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-lg">
                   <BarChart3 className="h-5 w-5 text-[var(--neon-cyan)]" />
-                  Videoaulas por Bimestre
+                  Videoaulas por Ano e Bimestre
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                {porBimestre && porBimestre.length > 0 ? (
-                  <div className="flex items-end justify-between gap-2 h-48">
-                    {porBimestre.map((item) => {
-                      const maxTotal = Math.max(...porBimestre.map((b) => b.total));
-                      const heightPercent = (item.total / maxTotal) * 100;
-                      return (
-                        <div key={item.bimestre} className="flex-1 flex flex-col items-center gap-2">
-                          <div className="text-xs font-bold neon-text-cyan">{item.total}</div>
-                          <div
-                            className="w-full bg-gradient-to-t from-[var(--neon-cyan)] to-[var(--neon-blue)] rounded-t-md transition-all duration-500 hover:opacity-80"
-                            style={{ height: `${heightPercent}%` }}
-                          />
-                          <div className="text-xs text-muted-foreground font-medium">
-                            {item.bimestre === 0 ? 'N/A' : `Bim ${item.bimestre}`}
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
+                {porAnoBimestre && porAnoBimestre.length > 0 ? (
+                  <ResponsiveContainer width="100%" height={300}>
+                    <BarChart data={porAnoBimestre}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
+                      <XAxis
+                        dataKey="ano"
+                        stroke="var(--neon-cyan)"
+                        style={{ fontSize: '12px' }}
+                      />
+                      <YAxis
+                        stroke="var(--neon-cyan)"
+                        style={{ fontSize: '12px' }}
+                      />
+                      <Tooltip
+                        contentStyle={{
+                          backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                          border: '1px solid var(--neon-cyan)',
+                          borderRadius: '8px',
+                        }}
+                      />
+                      <Legend />
+                      <Bar dataKey="bim1" name="Bimestre 1" fill="var(--neon-cyan)" />
+                      <Bar dataKey="bim2" name="Bimestre 2" fill="var(--neon-purple)" />
+                      <Bar dataKey="bim3" name="Bimestre 3" fill="var(--neon-green)" />
+                      <Bar dataKey="bim4" name="Bimestre 4" fill="var(--neon-pink)" />
+                    </BarChart>
+                  </ResponsiveContainer>
                 ) : (
                   <div className="text-center text-muted-foreground py-8">Sem dados disponíveis</div>
                 )}

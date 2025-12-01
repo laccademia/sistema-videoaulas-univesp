@@ -456,3 +456,29 @@
 - [x] Testar interatividade dos gráficos
 - [x] Validar responsividade
 - [x] Salvar checkpoint
+
+
+## 🔧 Correções nos Gráficos do Dashboard
+
+### Backend - Query para Ano/Bimestre
+- [x] Criar query porAnoBimestre retornando dados agrupados
+
+### Correções no Gráfico de Pizza
+- [x] Remover labels sobrepostas (label prop)
+- [x] Adicionar legenda lateral clara
+- [x] Atualizar título para "Distribuição de Videoaulas por Curso"
+
+### Gráfico de Barras Agrupadas
+- [x] Substituir gráfico simples por BarChart agrupado
+- [x] Eixo X: Anos
+- [x] Barras: Bimestre 1, 2, 3, 4 (cores diferentes)
+- [x] Atualizar título para "Videoaulas por Ano e Bimestre"
+
+### Títulos Descritivos
+- [x] "Evolução Temporal" → "Evolução Temporal de Videoaulas"
+- [x] Adicionar subtítulos explicativos quando necessário
+
+### Testes
+- [x] Validar legibilidade dos gráficos
+- [x] Testar responsividade
+- [x] Salvar checkpoint
