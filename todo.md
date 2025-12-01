@@ -702,3 +702,10 @@
 - [x] Atualizar GerenciarUsuarios com cards neon (ciano, magenta)
 - [x] Testar visual em todas as páginas
 - [x] Salvar checkpoint
+
+
+## 🔼 Reposicionar Botão Voltar para Home
+- [x] Mover botão "Voltar para Home" do rodapé para o topo da sidebar
+- [x] Manter estilo atual, apenas mudar posição
+- [x] Testar navegação
+- [x] Salvar checkpoint
