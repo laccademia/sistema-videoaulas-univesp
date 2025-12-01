@@ -24,6 +24,12 @@ import EditarProfessor from "./pages/admin/EditarProfessor";
 import DisciplinasAdmin from "./pages/admin/DisciplinasAdmin";
 import NovaDisciplina from "./pages/admin/NovaDisciplina";
 import EditarDisciplina from "./pages/admin/EditarDisciplina";
+import DesignersAdmin from "./pages/admin/designers/DesignersAdmin";
+import NovoDesigner from "./pages/admin/designers/NovoDesigner";
+import EditarDesigner from "./pages/admin/designers/EditarDesigner";
+import CursosAdmin from "./pages/admin/cursos/CursosAdmin";
+import NovoCurso from "./pages/admin/cursos/NovoCurso";
+import EditarCurso from "./pages/admin/cursos/EditarCurso";
 
 function Router() {
   return (
@@ -48,6 +54,12 @@ function Router() {
       <Route path="/admin/disciplinas" component={DisciplinasAdmin} />
       <Route path="/admin/disciplinas/nova" component={NovaDisciplina} />
       <Route path="/admin/disciplinas/:id/editar" component={EditarDisciplina} />
+      <Route path="/admin/designers" component={DesignersAdmin} />
+      <Route path="/admin/designers/novo" component={NovoDesigner} />
+      <Route path="/admin/designers/:id/editar" component={EditarDesigner} />
+      <Route path="/admin/cursos" component={CursosAdmin} />
+      <Route path="/admin/cursos/novo" component={NovoCurso} />
+      <Route path="/admin/cursos/:id/editar" component={EditarCurso} />
       <Route path={"/404"} component={NotFound} />
       <Route component={NotFound} />
     </Switch>

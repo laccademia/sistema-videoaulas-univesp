@@ -599,3 +599,63 @@ export async function getDisciplinaById(id: number) {
     cursoIds: cursosAssociados.map(c => c.cursoId),
   };
 }
+
+
+// ============================================
+// CRUD Helpers - Designers Instrucionais
+// ============================================
+
+export async function createDesignerInstrucional(data: { nome: string }) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const [result] = await db.insert(designersInstrucionais).values(data);
+  return result;
+}
+
+export async function updateDesignerInstrucional(id: number, data: { nome: string }) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.update(designersInstrucionais).set(data).where(eq(designersInstrucionais.id, id));
+}
+
+export async function deleteDesignerInstrucional(id: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.delete(designersInstrucionais).where(eq(designersInstrucionais.id, id));
+}
+
+export async function getDesignerInstrucionalById(id: number) {
+  const db = await getDb();
+  if (!db) return null;
+  const [designer] = await db.select().from(designersInstrucionais).where(eq(designersInstrucionais.id, id));
+  return designer;
+}
+
+
+// ============================================
+// CRUD Helpers - Cursos
+// ============================================
+
+export async function createCurso(data: { eixo: string; nome: string }) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const [result] = await db.insert(cursos).values(data);
+  return result;
+}
+
+export async function updateCurso(id: number, data: { eixo: string; nome: string }) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.update(cursos).set(data).where(eq(cursos.id, id));
+}
+
+export async function deleteCurso(id: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  // Remover relacionamentos com disciplinas primeiro
+  await db.delete(cursosDisciplinas).where(eq(cursosDisciplinas.cursoId, id));
+  
+  // Remover curso
+  await db.delete(cursos).where(eq(cursos.id, id));
+}

@@ -345,3 +345,26 @@
 - [x] Implementar gestão de relacionamento many-to-many com cursos
 - [x] Implementar exclusão com confirmação
 - [x] Testar fluxo completo
+
+
+## 🎯 CRUD de Designers Instrucionais e Cursos (Sessão Atual)
+
+### Backend - Procedures
+- [x] Adicionar procedures de Designers Instrucionais (create, update, delete)
+- [x] Adicionar procedures de Cursos (create, update, delete)
+
+### Frontend - CRUD de Designers Instrucionais
+- [x] Criar página de listagem (/admin/designers)
+- [x] Criar formulário de criação
+- [x] Criar formulário de edição
+- [x] Implementar exclusão com confirmação
+- [x] Adicionar rota no App.tsx
+- [x] Testar fluxo completo
+
+### Frontend - CRUD de Cursos
+- [x] Criar página de listagem (/admin/cursos)
+- [x] Criar formulário de criação (eixo + nome)
+- [x] Criar formulário de edição
+- [x] Implementar exclusão com confirmação
+- [x] Adicionar rota no App.tsx
+- [x] Testar fluxo completo

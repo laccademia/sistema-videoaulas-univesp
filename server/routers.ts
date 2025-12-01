@@ -29,6 +29,13 @@ import {
   updateDisciplina,
   deleteDisciplina,
   getDisciplinaById,
+  createDesignerInstrucional,
+  updateDesignerInstrucional,
+  deleteDesignerInstrucional,
+  getDesignerInstrucionalById,
+  createCurso,
+  updateCurso,
+  deleteCurso,
 } from "./db";
 
 export const appRouter = router({
@@ -462,6 +469,76 @@ export const appRouter = router({
         .input(z.object({ id: z.number() }))
         .query(async ({ input }) => {
           return await getDisciplinaById(input.id);
+        }),
+    }),
+
+    designers: router({
+      create: adminProcedure
+        .input(z.object({
+          nome: z.string().min(1),
+        }))
+        .mutation(async ({ input }) => {
+          await createDesignerInstrucional(input);
+          return { success: true };
+        }),
+
+      update: adminProcedure
+        .input(z.object({
+          id: z.number(),
+          nome: z.string().min(1),
+        }))
+        .mutation(async ({ input }) => {
+          await updateDesignerInstrucional(input.id, { nome: input.nome });
+          return { success: true };
+        }),
+
+      delete: adminProcedure
+        .input(z.object({ id: z.number() }))
+        .mutation(async ({ input }) => {
+          await deleteDesignerInstrucional(input.id);
+          return { success: true };
+        }),
+
+      getById: adminProcedure
+        .input(z.object({ id: z.number() }))
+        .query(async ({ input }) => {
+          return await getDesignerInstrucionalById(input.id);
+        }),
+    }),
+
+    cursos: router({
+      create: adminProcedure
+        .input(z.object({
+          eixo: z.string().min(1),
+          nome: z.string().min(1),
+        }))
+        .mutation(async ({ input }) => {
+          await createCurso(input);
+          return { success: true };
+        }),
+
+      update: adminProcedure
+        .input(z.object({
+          id: z.number(),
+          eixo: z.string().min(1),
+          nome: z.string().min(1),
+        }))
+        .mutation(async ({ input }) => {
+          await updateCurso(input.id, { eixo: input.eixo, nome: input.nome });
+          return { success: true };
+        }),
+
+      delete: adminProcedure
+        .input(z.object({ id: z.number() }))
+        .mutation(async ({ input }) => {
+          await deleteCurso(input.id);
+          return { success: true };
+        }),
+
+      getById: adminProcedure
+        .input(z.object({ id: z.number() }))
+        .query(async ({ input }) => {
+          return await getCursoById(input.id);
         }),
     }),
   }),
