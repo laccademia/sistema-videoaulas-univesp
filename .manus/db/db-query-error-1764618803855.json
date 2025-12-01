@@ -1,0 +1,8 @@
+{
+  "query": "SELECT id, name, email, role, openId FROM users WHERE role = 'admin' OR openId = (SELECT value FROM (SELECT 'owner_open_id' as key) as env_vars);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4Q6CVQSvv4vsSx3.a0e54a3010e2 --database AgAQ7M7gXFHDiuyXgHyZLe --execute SELECT id, name, email, role, openId FROM users WHERE role = 'admin' OR openId = (SELECT value FROM (SELECT 'owner_open_id' as key) as env_vars);",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your TiDB version for the right syntax to use line 1 column 130 near \"key) as env_vars)\""
+  ]
+}

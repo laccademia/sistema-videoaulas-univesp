@@ -1,0 +1,17 @@
+{
+  "query": "SELECT id, name, email, role, openId FROM users;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4Q6CVQSvv4vsSx3.a0e54a3010e2 --database AgAQ7M7gXFHDiuyXgHyZLe --execute SELECT id, name, email, role, openId FROM users;",
+  "rows": [
+    {
+      "id": "1",
+      "name": "CLAUDIA MORI",
+      "email": "laccademia@gmail.com",
+      "role": "admin",
+      "openId": "6kmNfdNMh3Hyu6RUVvjjkx"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tname\temail\trole\topenId\n1\tCLAUDIA MORI\tlaccademia@gmail.com\tadmin\t6kmNfdNMh3Hyu6RUVvjjkx\n",
+  "stderr": "",
+  "execution_time_ms": 46
+}

@@ -725,3 +725,67 @@
 - [x] Copiar logo Univesp para diretório público
 - [x] Testar fluxo completo de login
 - [x] Salvar checkpoint
+
+
+## 🔍 Diagnosticar e Corrigir Acesso ao Painel Admin
+- [ ] Verificar role do owner no banco de dados (deve ser "admin")
+- [ ] Verificar lógica de exibição do botão Admin no Layout
+- [ ] Garantir que owner tenha role "admin" automaticamente
+- [ ] Verificar proteção de rotas `/admin/*`
+- [ ] Testar acesso completo ao painel administrativo
+- [ ] Salvar checkpoint
+
+
+## 🔍 Diagnóstico Completo: Login e Admin Não Aparecem
+- [ ] Verificar AuthContext e hook useAuth
+- [ ] Verificar procedure tRPC auth.me
+- [ ] Adicionar console.log para debug do user no Layout
+- [ ] Verificar se role está sendo retornado corretamente
+- [ ] Testar acesso direto à rota /login
+- [ ] Testar acesso direto à rota /admin
+- [ ] Corrigir problemas identificados
+- [ ] Salvar checkpoint
+
+
+## 🚀 Migração para Supabase
+
+### Fase 1: Backup e Exportação
+- [ ] Criar checkpoint de segurança
+- [ ] Exportar videoaulas para CSV
+- [ ] Exportar disciplinas para CSV
+- [ ] Exportar cursos para CSV
+- [ ] Exportar professores para CSV
+- [ ] Exportar designers para CSV
+- [ ] Exportar relações curso-disciplina para CSV
+- [ ] Exportar ofertas de disciplinas para CSV
+
+### Fase 2: Configuração Supabase
+- [ ] Instalar @supabase/supabase-js
+- [ ] Configurar variáveis de ambiente (SUPABASE_URL, SUPABASE_ANON_KEY)
+- [ ] Criar cliente Supabase
+
+### Fase 3: Estrutura do Banco
+- [ ] Criar tabelas no Supabase (via SQL ou interface)
+- [ ] Configurar Row Level Security (RLS)
+- [ ] Criar índices necessários
+
+### Fase 4: Migração de Dados
+- [ ] Importar cursos
+- [ ] Importar disciplinas
+- [ ] Importar professores
+- [ ] Importar designers
+- [ ] Importar videoaulas
+- [ ] Importar relações
+
+### Fase 5: Autenticação
+- [ ] Configurar Supabase Auth
+- [ ] Atualizar AuthContext para usar Supabase
+- [ ] Implementar login/logout
+- [ ] Configurar proteção de rotas
+
+### Fase 6: Testes
+- [ ] Testar login
+- [ ] Testar acesso admin
+- [ ] Testar importação de dados
+- [ ] Testar CRUD de videoaulas
+- [ ] Salvar checkpoint final
