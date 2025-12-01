@@ -318,3 +318,9 @@
 - [ ] Implementar atualização via trpc.admin.videoaulas.update
 - [ ] Adicionar rota no App.tsx
 - [ ] Testar edição e validar funcionamento
+
+## 🐛 Corrigir Erro de Select.Item Vazio
+
+- [x] Identificar Select.Item com value vazio em NovaVideoaula.tsx (linhas 255 e 277)
+- [x] Corrigir para usar value não-vazio ou filtrar itens vazios (alterado para value="0")
+- [x] Testar formulário de nova videoaula

@@ -67,8 +67,8 @@ export default function NovaVideoaula() {
       disciplinaId: parseInt(formData.disciplinaId),
       ano: parseInt(formData.ano),
       bimestreOperacional: parseInt(formData.bimestreOperacional),
-      professorId: formData.professorId ? parseInt(formData.professorId) : undefined,
-      diId: formData.diId ? parseInt(formData.diId) : undefined,
+      professorId: formData.professorId && formData.professorId !== "0" ? parseInt(formData.professorId) : undefined,
+      diId: formData.diId && formData.diId !== "0" ? parseInt(formData.diId) : undefined,
       semana: parseInt(formData.semana),
       numeroAula: parseInt(formData.numeroAula),
       titulo: formData.titulo,
@@ -252,7 +252,7 @@ export default function NovaVideoaula() {
                       <SelectValue placeholder="Selecione o professor" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">Nenhum</SelectItem>
+                      <SelectItem value="0">Nenhum</SelectItem>
                       {professores?.map((p: any) => (
                         <SelectItem key={p.id} value={p.id.toString()}>
                           {p.nome}
@@ -274,7 +274,7 @@ export default function NovaVideoaula() {
                       <SelectValue placeholder="Selecione o designer" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">Nenhum</SelectItem>
+                      <SelectItem value="0">Nenhum</SelectItem>
                       {designers?.map((d: any) => (
                         <SelectItem key={d.id} value={d.id.toString()}>
                           {d.nome}
