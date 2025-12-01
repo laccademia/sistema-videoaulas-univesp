@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
-import { Moon, Sun, Menu, X, Video, BarChart3, Users, GraduationCap, BookOpen, Home, PieChart, Shield } from "lucide-react";
+import { Moon, Sun, Menu, X, Video, Users, GraduationCap, BookOpen, Home, Shield } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useAuth } from "@/contexts/AuthContext";
 import { useState } from "react";
@@ -17,14 +17,12 @@ export default function Layout({ children }: LayoutProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navigation = [
-    { name: "Início", href: "/", icon: Home },
+    { name: "In\u00edcio", href: "/", icon: Home },
     { name: "Cursos", href: "/cursos", icon: GraduationCap },
     { name: "Disciplinas", href: "/disciplinas", icon: BookOpen },
     { name: "Videoaulas", href: "/videoaulas", icon: Video },
     { name: "Professores", href: "/professores", icon: Users },
     { name: "Designers", href: "/designers-instrucionais", icon: Users },
-    { name: "Estatísticas", href: "/estatisticas", icon: BarChart3 },
-    { name: "Visualizações", href: "/visualizacoes", icon: PieChart },
   ];
 
   const isActive = (href: string) => {

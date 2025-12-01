@@ -589,3 +589,23 @@
 - [ ] Criar página de gerenciamento de usuários
 - [ ] Adicionar indicador de perfil no header
 - [ ] Testar permissões por perfil
+
+
+## 🎨 Ajuste de Paleta de Cores e Redesign do Dashboard
+- [ ] Atualizar paleta de cores no index.css (fundo #0A101F, cards #141C2F)
+- [ ] Definir cores neon específicas para cada categoria
+- [ ] Redesenhar Home.tsx com gráfico de barras horizontais
+- [ ] Adicionar gráfico de área com gradiente (ciano → roxo → magenta)
+- [ ] Remover cards de acessibilidade do dashboard
+- [ ] Testar visual e salvar checkpoint
+
+
+## 🎨 Ajuste de Paleta de Cores e Redesign do Dashboard
+- [x] Atualizar paleta de cores no index.css (fundo #0A101F, cards #141C2F)
+- [x] Definir cores neon específicas para cada categoria
+- [x] Redesenhar Home.tsx com gráfico de barras horizontais
+- [x] Adicionar gráfico de área com gradiente (ciano → roxo → magenta)
+- [x] Remover cards de acessibilidade do dashboard
+- [x] Remover rotas de Estatísticas e Visualizações do App.tsx
+- [x] Remover links de navegação do Layout.tsx
+- [x] Testar visual e salvar checkpoint
