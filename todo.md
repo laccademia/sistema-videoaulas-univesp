@@ -380,3 +380,35 @@
 - [x] Atualizar contador de resultados com filtros aplicados
 - [x] Testar combinações de filtros
 - [x] Validar funcionamento completo
+
+
+## 🎨 Redesign com Tema Neon Elegante
+
+### Preparação de Assets
+- [x] Converter logo Univesp EPS para SVG/PNG
+- [x] Otimizar logo para uso web
+- [x] Adicionar logo ao projeto
+
+### Tema Neon no CSS Global
+- [x] Definir paleta de cores neon (ciano, roxo, verde)
+- [x] Criar gradientes de fundo dark
+- [x] Implementar classes utilitárias para efeitos glow
+- [x] Adicionar animações sutis
+
+### Página Inicial (Home.tsx)
+- [x] Redesenhar hero section com gradiente neon
+- [x] Adicionar logo Univesp com efeito glow
+- [x] Criar cards de estatísticas com bordas neon
+- [x] Implementar efeitos hover nos botões
+
+### Dashboard Administrativo
+- [x] Atualizar sidebar com estilo neon
+- [x] Redesenhar cards de estatísticas com glow
+- [x] Adicionar logo no header do dashboard
+- [x] Aplicar tema consistente em todas as páginas admin
+
+### Testes e Ajustes
+- [x] Testar responsividade do novo design
+- [x] Validar contraste e acessibilidade
+- [x] Ajustar intensidade dos efeitos neon
+- [x] Salvar checkpoint final

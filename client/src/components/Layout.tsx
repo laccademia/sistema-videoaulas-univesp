@@ -36,23 +36,23 @@ export default function Layout({ children }: LayoutProps) {
 
   return (
     <div className="min-h-screen bg-background transition-theme">
-      {/* Header */}
-      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 transition-theme">
+      {/* Header with Neon Style */}
+      <header className="sticky top-0 z-50 w-full border-b border-[var(--neon-cyan)]/30 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 transition-theme">
         <div className="container flex h-16 items-center justify-between">
-          {/* Logo */}
+          {/* Logo with Neon Effect */}
           <Link href="/">
-            <div className="flex items-center space-x-2 cursor-pointer">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-                <Video className="h-6 w-6" />
+            <div className="flex items-center space-x-3 cursor-pointer group">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[var(--neon-cyan)]/20 neon-border-cyan group-hover:neon-glow-cyan transition-all">
+                <Video className="h-6 w-6 text-[var(--neon-cyan)]" />
               </div>
               <div className="flex flex-col">
-                <span className="text-lg font-bold leading-none">Videoaulas</span>
-                <span className="text-xs text-muted-foreground">Univesp</span>
+                <span className="text-lg font-bold leading-none neon-text-cyan">Videoaulas</span>
+                <span className="text-xs text-[var(--neon-purple)]">Univesp</span>
               </div>
             </div>
           </Link>
 
-          {/* Desktop Navigation */}
+          {/* Desktop Navigation with Neon Hover */}
           <nav className="hidden md:flex items-center space-x-1">
             {navigation.map((item) => {
               const Icon = item.icon;
@@ -62,7 +62,7 @@ export default function Layout({ children }: LayoutProps) {
                   <Button
                     variant={active ? "default" : "ghost"}
                     size="sm"
-                    className="gap-2"
+                    className={`gap-2 transition-all ${active ? 'neon-glow-cyan' : 'hover:text-[var(--neon-cyan)]'}`}
                   >
                     <Icon className="h-4 w-4" />
                     {item.name}
@@ -75,7 +75,7 @@ export default function Layout({ children }: LayoutProps) {
                 <Button
                   variant={isActive("/admin") ? "default" : "outline"}
                   size="sm"
-                  className="gap-2 ml-2"
+                  className={`gap-2 ml-2 transition-all ${isActive("/admin") ? 'neon-glow-purple' : 'hover:neon-border-purple'}`}
                 >
                   <Shield className="h-4 w-4" />
                   Admin
