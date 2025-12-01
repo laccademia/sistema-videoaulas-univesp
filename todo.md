@@ -716,3 +716,12 @@
 - [x] Remover import Upload não usado
 - [x] Funcionalidades de importação continuam acessíveis via cards no dashboard
 - [x] Salvar checkpoint
+
+
+## 🔐 Página de Login com OAuth Manus
+- [x] Criar página Login.tsx com design neon e logo Univesp
+- [x] Adicionar botão "Entrar com Manus" que redireciona para OAuth
+- [x] Atualizar App.tsx para adicionar rota /login
+- [x] Copiar logo Univesp para diretório público
+- [x] Testar fluxo completo de login
+- [x] Salvar checkpoint
