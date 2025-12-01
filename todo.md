@@ -709,3 +709,10 @@
 - [x] Manter estilo atual, apenas mudar posição
 - [x] Testar navegação
 - [x] Salvar checkpoint
+
+
+## 🗑️ Remover Item Importar da Sidebar
+- [x] Remover item "Importar" do array menuItems no AdminLayout
+- [x] Remover import Upload não usado
+- [x] Funcionalidades de importação continuam acessíveis via cards no dashboard
+- [x] Salvar checkpoint

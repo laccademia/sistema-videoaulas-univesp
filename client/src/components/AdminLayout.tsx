@@ -8,10 +8,8 @@ import {
   GraduationCap, 
   Users, 
   Palette,
-  LogOut,
   Home,
   Shield,
-  Upload,
   History
 } from "lucide-react";
 import { useEffect } from "react";
@@ -46,9 +44,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     { href: "/admin/cursos", icon: GraduationCap, label: "Cursos", color: "#00FF55" },
     { href: "/admin/professores", icon: Users, label: "Professores", color: "#FF6A00" },
     { href: "/admin/designers", icon: Palette, label: "Designers", color: "#FFE600" },
-    { href: "/admin/importar", icon: Upload, label: "Importar", color: "#FF00C7" },
-    { href: "/admin/importacoes/historico", icon: History, label: "Hist\u00f3rico", color: "#BFFF00" },
-    { href: "/admin/usuarios", icon: Users, label: "Usu\u00e1rios", color: "#FFE600" },
+    { href: "/admin/importacoes/historico", icon: History, label: "Histórico", color: "#BFFF00" },
+    { href: "/admin/usuarios", icon: Users, label: "Usuários", color: "#FFE600" },
   ];
 
   return (
