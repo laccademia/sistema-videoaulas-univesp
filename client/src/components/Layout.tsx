@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
-import { Moon, Sun, Menu, X, Video, BarChart3, Users, GraduationCap, BookOpen, Home } from "lucide-react";
+import { Moon, Sun, Menu, X, Video, BarChart3, Users, GraduationCap, BookOpen, Home, PieChart } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useState } from "react";
 
@@ -22,6 +22,7 @@ export default function Layout({ children }: LayoutProps) {
     { name: "Professores", href: "/professores", icon: Users },
     { name: "Designers", href: "/designers-instrucionais", icon: Users },
     { name: "Estatísticas", href: "/estatisticas", icon: BarChart3 },
+    { name: "Visualizações", href: "/visualizacoes", icon: PieChart },
   ];
 
   const isActive = (href: string) => {

@@ -230,3 +230,13 @@
 - [x] Verificar se é limitação do MySQL driver ou query (não, era limite hardcoded no frontend)
 - [x] Corrigir para exibir todas as 1.887 videoaulas (limite aumentado de 1000 para 10000)
 - [x] Validar contagem correta na página de Videoaulas (1887 exibidas corretamente)
+
+## 📊 Gráficos Interativos de Visualização
+
+- [x] Instalar biblioteca de gráficos (Recharts)
+- [x] Criar gráfico de barras: Distribuição de videoaulas por ano
+- [x] Criar gráfico de pizza: Cobertura de acessibilidade (Libras, Audiodescrição, CC)
+- [x] Criar gráfico de linha: Evolução temporal de videoaulas
+- [x] Criar gráfico de barras empilhadas: Videoaulas por ano e bimestre
+- [x] Adicionar página de Visualizações no menu de navegação
+- [x] Testar interatividade e responsividade dos gráficos

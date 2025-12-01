@@ -13,6 +13,7 @@ import VideoaulaDetalhes from "./pages/VideoaulaDetalhes";
 import Professores from "./pages/Professores";
 import DesignersInstrucionais from "./pages/DesignersInstrucionais";
 import Estatisticas from "./pages/Estatisticas";
+import Visualizacoes from "./pages/Visualizacoes";
 
 function Router() {
   return (
@@ -26,6 +27,7 @@ function Router() {
       <Route path={"/professores"} component={Professores} />
       <Route path={"/designers-instrucionais"} component={DesignersInstrucionais} />
       <Route path={"/estatisticas"} component={Estatisticas} />
+      <Route path={"/visualizacoes"} component={Visualizacoes} />
       <Route path={"/404"} component={NotFound} />
       <Route component={NotFound} />
     </Switch>
