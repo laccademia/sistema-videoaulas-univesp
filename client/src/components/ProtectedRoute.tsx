@@ -12,8 +12,10 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   const [, setLocation] = useLocation();
 
   useEffect(() => {
+    console.log('[PROTECTED ROUTE] isLoading:', isLoading, 'user:', user);
     // Se não está carregando e não tem usuário, redireciona para login
     if (!isLoading && !user) {
+      console.log('[PROTECTED ROUTE] Redirecionando para /login');
       setLocation("/login");
     }
   }, [user, isLoading, setLocation]);

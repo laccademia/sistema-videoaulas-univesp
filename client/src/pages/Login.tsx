@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation } from 'wouter';
 import { trpc } from '../lib/trpc';
 import { Button } from '../components/ui/button';
@@ -14,9 +14,10 @@ export default function Login() {
   const [name, setName] = useState('');
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
+  const [loginSuccess, setLoginSuccess] = useState(false);
 
-  const loginMutation = trpc.auth.supabase.login.useMutation();
-  const signupMutation = trpc.auth.supabase.signup.useMutation();
+  const loginMutation = trpc.auth.login.useMutation();
+  const signupMutation = trpc.auth.signup.useMutation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,18 +38,15 @@ export default function Login() {
         localStorage.setItem('supabase_user', JSON.stringify(result.user));
         
         setMessage('Login realizado com sucesso!');
+        setLoginSuccess(true);
         
-        // Redirecionar para admin se for admin, senão para home
+        // Redirecionar após pequeno delay
         setTimeout(() => {
           console.log('[LOGIN FRONTEND] Redirecionando...');
-          if (result.user?.role === 'admin') {
-            console.log('[LOGIN FRONTEND] Redirecionando para /admin');
-            setLocation('/admin');
-          } else {
-            console.log('[LOGIN FRONTEND] Redirecionando para /');
-            setLocation('/');
-          }
-        }, 1000);
+          const targetUrl = result.user?.role === 'admin' ? '/admin' : '/';
+          console.log('[LOGIN FRONTEND] Redirecionando para:', targetUrl);
+          window.location.href = targetUrl;
+        }, 500);
       } else {
         // Cadastro
         await signupMutation.mutateAsync({ email, password, name });

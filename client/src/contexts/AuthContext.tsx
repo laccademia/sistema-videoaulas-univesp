@@ -23,7 +23,7 @@ export function AuthProvider({ children }: { children: ReactNode}) {
   const [user, setUser] = useState<User | null>(null);
   const [supabaseUser, setSupabaseUser] = useState<SupabaseUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const getUserQuery = trpc.auth.supabase.getUser.useQuery(undefined, {
+  const getUserQuery = trpc.auth.getUser.useQuery(undefined, {
     enabled: false, // Não executar automaticamente
   });
 
@@ -128,8 +128,13 @@ export function AuthProvider({ children }: { children: ReactNode}) {
           });
         }
       } else {
-        setSupabaseUser(null);
-        setUser(null);
+        // Se não tem sessão Supabase, verificar localStorage antes de limpar
+        const storedUser = localStorage.getItem('supabase_user');
+        if (!storedUser) {
+          // Só limpa se não tem usuário no localStorage também
+          setSupabaseUser(null);
+          setUser(null);
+        }
       }
       setIsLoading(false);
     });

@@ -63,14 +63,13 @@ export const appRouter = router({
       } as const;
     }),
 
-    // Supabase Auth (produção)
-    supabase: router({
-      login: publicProcedure
-        .input(z.object({
-          email: z.string().email(),
-          password: z.string().min(6),
-        }))
-        .mutation(async ({ input }) => {
+    // Login e Signup (Supabase Auth)
+    login: publicProcedure
+      .input(z.object({
+        email: z.string().email(),
+        password: z.string().min(6),
+      }))
+      .mutation(async ({ input }) => {
           const { email, password } = input;
           
           console.log('[LOGIN] Tentando login para:', email);
@@ -116,29 +115,22 @@ export const appRouter = router({
           return result;
         }),
 
-      signup: publicProcedure
-        .input(z.object({
-          email: z.string().email(),
-          password: z.string().min(6),
-          name: z.string().optional(),
-        }))
-        .mutation(async ({ input }) => {
-          const result = await SupabaseAuth.signUp(input.email, input.password, input.name);
-          return result;
-        }),
+    signup: publicProcedure
+      .input(z.object({
+        email: z.string().email(),
+        password: z.string().min(6),
+        name: z.string().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const result = await SupabaseAuth.signUp(input.email, input.password, input.name);
+        return result;
+      }),
 
-      signout: publicProcedure
-        .mutation(async () => {
-          await SupabaseAuth.signOut();
-          return { success: true };
-        }),
-
-      getUser: publicProcedure
-        .query(async () => {
-          const user = await SupabaseAuth.getCurrentUser();
-          return user;
-        }),
-    }),
+    getUser: publicProcedure
+      .query(async () => {
+        const user = await SupabaseAuth.getCurrentUser();
+        return user;
+      }),
   }),
 
   // ============================================
