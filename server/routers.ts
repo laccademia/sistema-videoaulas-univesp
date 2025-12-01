@@ -3,6 +3,9 @@ import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, adminProcedure, router } from "./_core/trpc";
 import { z } from "zod";
+import { getDb } from "./db";
+import { disciplinas, videoaulas, ofertasDisciplinas, cursosDisciplinas } from "../drizzle/schema";
+import { eq, and } from "drizzle-orm";
 import {
   getAllCursos,
   getCursoById,
@@ -606,6 +609,46 @@ export const appRouter = router({
         .input(z.object({ id: z.number() }))
         .query(async ({ input }) => {
           return await getCursoById(input.id);
+        }),
+    }),
+    
+    import: router({
+      linksAcessibilidade: adminProcedure
+        .input(z.array(z.object({
+          idTvCultura: z.string().min(1),
+          linkLibras: z.string().optional(),
+          linkAudiodescricao: z.string().optional(),
+          ccLegenda: z.boolean().optional(),
+        })))
+        .mutation(async ({ input }) => {
+          const db = await getDb();
+          if (!db) throw new Error('Database not available');
+          const results = [];
+          
+          for (const update of input) {
+            try {
+              const [videoaula] = await db.select().from(videoaulas).where(eq(videoaulas.idTvCultura, update.idTvCultura)).limit(1);
+              
+              if (!videoaula) {
+                results.push({ idTvCultura: update.idTvCultura, status: 'error', message: 'Videoaula não encontrada' });
+                continue;
+              }
+              
+              await db.update(videoaulas)
+                .set({
+                  linkLibras: update.linkLibras || videoaula.linkLibras,
+                  linkAudiodescricao: update.linkAudiodescricao || videoaula.linkAudiodescricao,
+                  ccLegenda: update.ccLegenda !== undefined ? update.ccLegenda : videoaula.ccLegenda,
+                })
+                .where(eq(videoaulas.id, videoaula.id));
+              
+              results.push({ idTvCultura: update.idTvCultura, status: 'success', message: 'Atualizada com sucesso' });
+            } catch (error) {
+              results.push({ idTvCultura: update.idTvCultura, status: 'error', message: error instanceof Error ? error.message : 'Erro desconhecido' });
+            }
+          }
+          
+          return results;
         }),
     }),
   }),

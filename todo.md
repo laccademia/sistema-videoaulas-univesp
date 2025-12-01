@@ -482,3 +482,37 @@
 - [x] Validar legibilidade dos gráficos
 - [x] Testar responsividade
 - [x] Salvar checkpoint
+
+
+## 📥 Sistema de Importação em Lote (CSV)
+
+### Setup e Bibliotecas
+- [x] Instalar biblioteca papaparse para parsing de CSV
+- [x] Configurar tipos TypeScript para dados importados
+
+### Backend - Procedures de Importação
+- [x] Criar procedure importDisciplinas (array de disciplinas)
+- [x] Criar procedure importVideoaulas (array de videoaulas)
+- [x] Criar procedure updateLinksAcessibilidade (array de updates)
+- [x] Implementar validação de dados antes de salvar
+- [x] Retornar relatório de sucesso/erro para cada linha
+
+### Frontend - Página de Importação
+- [x] Criar página /admin/importar
+- [x] Adicionar tabs para diferentes tipos de importação
+- [x] Implementar upload de arquivo CSV
+- [x] Criar preview de dados antes de importar
+- [x] Mostrar relatório de importação (sucessos e erros)
+- [x] Adicionar templates CSV para download
+
+### Validações
+- [x] Validar formato do CSV (colunas obrigatórias)
+- [x] Validar dados (códigos únicos, referências válidas)
+- [x] Prevenir duplicatas
+- [x] Tratar erros de forma clara
+
+### Testes
+- [x] Testar importação de disciplinas
+- [x] Testar importação de videoaulas
+- [x] Testar atualização de links de acessibilidade
+- [x] Salvar checkpoint

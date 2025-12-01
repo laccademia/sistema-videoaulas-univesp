@@ -30,6 +30,7 @@ import EditarDesigner from "./pages/admin/designers/EditarDesigner";
 import CursosAdmin from "./pages/admin/cursos/CursosAdmin";
 import NovoCurso from "./pages/admin/cursos/NovoCurso";
 import EditarCurso from "./pages/admin/cursos/EditarCurso";
+import ImportarAcessibilidade from "./pages/admin/import/ImportarAcessibilidade";
 
 function Router() {
   return (
@@ -59,8 +60,8 @@ function Router() {
       <Route path="/admin/designers/:id/editar" component={EditarDesigner} />
       <Route path="/admin/cursos" component={CursosAdmin} />
       <Route path="/admin/cursos/novo" component={NovoCurso} />
-      <Route path="/admin/cursos/:id/editar" component={EditarCurso} />
-      <Route path={"/404"} component={NotFound} />
+      <Route path={"admin/cursos/:id/editar"} component={EditarCurso} />
+      <Route path={"admin/importar/acessibilidade"} component={ImportarAcessibilidade} />      <Route path={"/404"} component={NotFound} />
       <Route component={NotFound} />
     </Switch>
   );
