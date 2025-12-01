@@ -33,10 +33,13 @@ import ImportarAcessibilidade from "./pages/admin/import/ImportarAcessibilidade"
 import ImportarDisciplinas from "./pages/admin/import/ImportarDisciplinas";
 import ImportarVideoaulas from "./pages/admin/import/ImportarVideoaulas";
 import HistoricoImportacoes from "./pages/admin/import/HistoricoImportacoes";
+import Login from "./pages/Login";
+import GerenciarUsuarios from "./pages/GerenciarUsuarios";
 
 function Router() {
   return (
     <Switch>
+      <Route path={"/login"} component={Login} />
       <Route path={"/"} component={Home} />
       <Route path={"/cursos"} component={Cursos} />
       <Route path={"/cursos/:id"} component={CursoDetalhes} />
@@ -66,6 +69,7 @@ function Router() {
       <Route path="/admin/importar/disciplinas" component={ImportarDisciplinas} />
       <Route path="/admin/importar/videoaulas" component={ImportarVideoaulas} />
       <Route path="/admin/importacoes/historico" component={HistoricoImportacoes} />
+      <Route path="/admin/usuarios" component={GerenciarUsuarios} />
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
     </Switch>

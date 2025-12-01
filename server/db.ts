@@ -80,6 +80,19 @@ export async function upsertUser(user: InsertUser): Promise<void> {
       updateSet.role = 'admin';
     }
 
+    // Define status: owner sempre approved, novos usuários pending
+    if (user.status !== undefined) {
+      values.status = user.status;
+      updateSet.status = user.status;
+    } else if (user.openId === ENV.ownerOpenId) {
+      values.status = 'approved';
+      updateSet.status = 'approved';
+    } else {
+      // Novos usuários começam como pending
+      values.status = 'pending';
+      // Não atualiza status em updates subsequentes (preserva aprovação)
+    }
+
     if (!values.lastSignedIn) {
       values.lastSignedIn = new Date();
     }

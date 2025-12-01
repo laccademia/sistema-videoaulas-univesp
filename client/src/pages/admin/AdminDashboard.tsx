@@ -197,6 +197,20 @@ export default function AdminDashboard() {
                 </CardHeader>
               </Card>
             </Link>
+
+            <Link href="/admin/usuarios">
+              <Card className="hover:shadow-lg transition-all cursor-pointer border-2" style={{ borderColor: '#FFE600' }}>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Users className="h-5 w-5" style={{ color: '#FFE600' }} />
+                    Gerenciar Usuários
+                  </CardTitle>
+                  <CardDescription>
+                    Aprovar ou rejeitar solicitações de acesso
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+            </Link>
           </div>
         </div>
 

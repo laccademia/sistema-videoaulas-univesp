@@ -623,3 +623,17 @@
 - [x] Aplicar estilo neon consistente nos tooltips
 - [x] Adicionar animações suaves no hover
 - [x] Testar interatividade e salvar checkpoint
+
+
+## 🔐 Sistema de Login e Controle de Acesso
+- [x] Modificar schema do banco: adicionar campo `status` (pending/approved/rejected) na tabela users
+- [x] Criar página de login customizada com design neon
+- [x] Implementar lógica de primeiro acesso (status = pending)
+- [x] Criar sistema de notificação para owner quando novo usuário se registra
+- [x] Criar painel administrativo de aprovação de usuários
+- [x] Implementar botões de aprovar/rejeitar usuários
+- [x] Criar middleware de verificação de status (bloquear pending/rejected)
+- [x] Adicionar mensagem "Aguardando aprovação" para usuários pending
+- [x] Adicionar rota /admin/usuarios e link no AdminDashboard
+- [x] Testar fluxo completo de login → solicitação → aprovação → acesso
+- [x] Salvar checkpoint final

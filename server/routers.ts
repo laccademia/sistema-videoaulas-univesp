@@ -827,6 +827,72 @@ export const appRouter = router({
         }),
     }),
   }),
+
+  // ============================================
+  // GERENCIAMENTO DE USUÁRIOS
+  // ============================================
+  users: router({
+    // Listar todos os usuários (apenas admin)
+    list: adminProcedure.query(async () => {
+      const db = await getDb();
+      if (!db) return [];
+      return await db.select().from(users).orderBy(desc(users.createdAt));
+    }),
+
+    // Listar usuários pendentes (apenas admin)
+    listPending: adminProcedure.query(async () => {
+      const db = await getDb();
+      if (!db) return [];
+      return await db.select().from(users)
+        .where(eq(users.status, 'pending'))
+        .orderBy(desc(users.createdAt));
+    }),
+
+    // Aprovar usuário (apenas admin)
+    approve: adminProcedure
+      .input(z.object({ userId: z.number() }))
+      .mutation(async ({ input }) => {
+        const db = await getDb();
+        if (!db) throw new Error('Database not available');
+        
+        await db.update(users)
+          .set({ status: 'approved' })
+          .where(eq(users.id, input.userId));
+        
+        return { success: true };
+      }),
+
+    // Rejeitar usuário (apenas admin)
+    reject: adminProcedure
+      .input(z.object({ userId: z.number() }))
+      .mutation(async ({ input }) => {
+        const db = await getDb();
+        if (!db) throw new Error('Database not available');
+        
+        await db.update(users)
+          .set({ status: 'rejected' })
+          .where(eq(users.id, input.userId));
+        
+        return { success: true };
+      }),
+
+    // Alterar role do usuário (apenas admin)
+    changeRole: adminProcedure
+      .input(z.object({ 
+        userId: z.number(),
+        role: z.enum(['user', 'admin'])
+      }))
+      .mutation(async ({ input }) => {
+        const db = await getDb();
+        if (!db) throw new Error('Database not available');
+        
+        await db.update(users)
+          .set({ role: input.role })
+          .where(eq(users.id, input.userId));
+        
+        return { success: true };
+      }),
+  }),
 });
 
 export type AppRouter = typeof appRouter;

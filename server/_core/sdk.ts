@@ -7,6 +7,7 @@ import { SignJWT, jwtVerify } from "jose";
 import type { User } from "../../drizzle/schema";
 import * as db from "../db";
 import { ENV } from "./env";
+import { notifyOwner } from "./notification";
 import type {
   ExchangeTokenRequest,
   ExchangeTokenResponse,
@@ -274,6 +275,8 @@ class SDKServer {
     if (!user) {
       try {
         const userInfo = await this.getUserInfoWithJwt(sessionCookie ?? "");
+        const isNewUser = true;
+        
         await db.upsertUser({
           openId: userInfo.openId,
           name: userInfo.name || null,
@@ -282,6 +285,22 @@ class SDKServer {
           lastSignedIn: signedInAt,
         });
         user = await db.getUserByOpenId(userInfo.openId);
+        
+        // Notifica owner sobre novo usuário (exceto se for o próprio owner)
+        if (isNewUser && userInfo.openId !== ENV.ownerOpenId) {
+          try {
+            await notifyOwner({
+              title: "🔔 Nova Solicitação de Acesso - Sistema Videoaulas",
+              content: `Um novo usuário solicitou acesso ao sistema:\n\n` +
+                `👤 Nome: ${userInfo.name || "N/A"}\n` +
+                `📧 Email: ${userInfo.email || "N/A"}\n` +
+                `🔑 Método: ${userInfo.loginMethod || "N/A"}\n\n` +
+                `Acesse o painel administrativo para aprovar ou rejeitar esta solicitação.`
+            });
+          } catch (notifError) {
+            console.error("[Auth] Failed to notify owner about new user:", notifError);
+          }
+        }
       } catch (error) {
         console.error("[Auth] Failed to sync user from OAuth:", error);
         throw ForbiddenError("Failed to sync user info");
