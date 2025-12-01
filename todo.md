@@ -247,3 +247,9 @@
 - [x] Melhorar visibilidade das labels e legendas
 - [x] Garantir que texto seja legível em ambos os temas (claro e escuro)
 - [x] Validar contraste em todos os gráficos
+
+## 🐛 Corrigir Contagem de Cursos nas Disciplinas
+
+- [x] Investigar por que disciplinas do ciclo básico mostram "+8 outros cursos" ou "+9 outros cursos" incorretamente
+- [x] Corrigir lógica de contagem de cursos associados
+- [x] Validar que disciplinas compartilhadas mostram contagem correta

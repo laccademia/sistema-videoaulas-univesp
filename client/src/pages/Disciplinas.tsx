@@ -161,18 +161,30 @@ export default function Disciplinas() {
                     </div>
                     <CardTitle className="text-base line-clamp-2">{item.disciplina.nome}</CardTitle>
                     <CardDescription className="text-xs space-y-1">
-                      <div className="flex items-center gap-1">
-                        <span className="font-medium">{cursoExibir?.nome}</span>
-                      </div>
-                      <div className="text-muted-foreground">
-                        Eixo: {cursoExibir?.eixo}
-                      </div>
-                      {isMultiCurso && (
-                        <div className="pt-1">
-                          <Badge variant="outline" className="text-[10px] px-1.5 py-0.5">
-                            +{item.cursos.length - 1} {item.cursos.length === 2 ? 'outro curso' : 'outros cursos'}
-                          </Badge>
-                        </div>
+                      {isMultiCurso ? (
+                        <>
+                          <div className="flex items-center gap-1">
+                            <GraduationCap className="h-3 w-3" />
+                            <span className="font-medium">Ciclo Básico</span>
+                          </div>
+                          <div className="text-muted-foreground">
+                            Presente em {item.cursos.length} cursos
+                          </div>
+                          <div className="pt-1">
+                            <Badge variant="secondary" className="text-[10px] px-1.5 py-0.5">
+                              Compartilhada
+                            </Badge>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <div className="flex items-center gap-1">
+                            <span className="font-medium">{cursoExibir?.nome}</span>
+                          </div>
+                          <div className="text-muted-foreground">
+                            Eixo: {cursoExibir?.eixo}
+                          </div>
+                        </>
                       )}
                     </CardDescription>
                   </CardHeader>
