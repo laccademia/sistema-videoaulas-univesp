@@ -185,21 +185,21 @@
 }
 
 @layer utilities {
-  /* Neon Glow Effects */
+  /* Neon Glow Effects - Subtle Professional */
   .neon-glow-cyan {
-    box-shadow: 0 0 10px var(--neon-cyan), 0 0 20px var(--neon-cyan), 0 0 30px var(--neon-cyan);
+    box-shadow: 0 0 8px var(--neon-cyan), 0 0 16px var(--neon-cyan);
   }
   
   .neon-glow-purple {
-    box-shadow: 0 0 10px var(--neon-purple), 0 0 20px var(--neon-purple), 0 0 30px var(--neon-purple);
+    box-shadow: 0 0 8px var(--neon-purple), 0 0 16px var(--neon-purple);
   }
   
   .neon-glow-green {
-    box-shadow: 0 0 10px var(--neon-green), 0 0 20px var(--neon-green), 0 0 30px var(--neon-green);
+    box-shadow: 0 0 8px var(--neon-green), 0 0 16px var(--neon-green);
   }
   
   .neon-glow-pink {
-    box-shadow: 0 0 10px var(--neon-pink), 0 0 20px var(--neon-pink), 0 0 30px var(--neon-pink);
+    box-shadow: 0 0 8px var(--neon-pink), 0 0 16px var(--neon-pink);
   }
   
   .neon-border-cyan {
@@ -219,17 +219,14 @@
   
   .neon-text-cyan {
     color: var(--neon-cyan);
-    text-shadow: 0 0 10px var(--neon-cyan), 0 0 20px var(--neon-cyan);
   }
   
   .neon-text-purple {
     color: var(--neon-purple);
-    text-shadow: 0 0 10px var(--neon-purple), 0 0 20px var(--neon-purple);
   }
   
   .neon-text-green {
     color: var(--neon-green);
-    text-shadow: 0 0 10px var(--neon-green), 0 0 20px var(--neon-green);
   }
   
   .gradient-neon-bg {
