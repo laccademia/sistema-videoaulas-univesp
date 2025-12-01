@@ -17,6 +17,7 @@ import Visualizacoes from "./pages/Visualizacoes";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import VideoaulasAdmin from "./pages/admin/VideoaulasAdmin";
 import NovaVideoaula from "./pages/admin/NovaVideoaula";
+import EditarVideoaula from "./pages/admin/EditarVideoaula";
 
 function Router() {
   return (
@@ -34,6 +35,7 @@ function Router() {
       <Route path={"/admin"} component={AdminDashboard} />
       <Route path={"/admin/videoaulas"} component={VideoaulasAdmin} />
       <Route path={"/admin/videoaulas/nova"} component={NovaVideoaula} />
+      <Route path={"/admin/videoaulas/:id/editar"} component={EditarVideoaula} />
       <Route path={"/404"} component={NotFound} />
       <Route component={NotFound} />
     </Switch>

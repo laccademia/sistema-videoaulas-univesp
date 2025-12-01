@@ -269,7 +269,7 @@
 ### CRUD de Videoaulas
 - [x] Criar página de listagem de videoaulas (/admin/videoaulas)
 - [x] Criar formulário de criação de videoaula
-- [ ] Criar formulário de edição de videoaula
+- [x] Criar formulário de edição de videoaula
 - [x] Implementar exclusão de videoaula com confirmação (AlertDialog)
 - [x] Adicionar procedures no backend: createVideoaula, updateVideoaula, deleteVideoaula
 - [x] Validar campos obrigatórios e formatos
@@ -309,3 +309,12 @@
 - [ ] Adicionar confirmação antes de exclusões
 - [ ] Implementar busca e filtros nas listagens administrativas
 - [ ] Adicionar paginação nas tabelas administrativas
+
+## 📝 Implementar Formulário de Edição de Videoaulas
+
+- [x] Criar página EditarVideoaula.tsx (/admin/videoaulas/:id/editar)
+- [x] Carregar dados existentes da videoaula via trpc.videoaulas.getById
+- [ ] Preencher formulário com dados existentes
+- [ ] Implementar atualização via trpc.admin.videoaulas.update
+- [ ] Adicionar rota no App.tsx
+- [ ] Testar edição e validar funcionamento
