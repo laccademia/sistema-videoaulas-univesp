@@ -545,3 +545,46 @@
 - [x] Testar registro de importação
 - [x] Testar listagem de histórico
 - [x] Salvar checkpoint
+
+
+## 🔗 Link de Histórico no Menu Admin
+- [x] Adicionar item "Histórico de Importações" no dashboard admin
+- [x] Criar ícone apropriado para o link
+- [x] Testar navegação
+
+## 📥 Importação de Disciplinas via CSV
+- [x] Criar procedure backend importDisciplinas
+- [x] Criar página /admin/importar/disciplinas
+- [x] Adicionar validação de dados (código único, cursos válidos)
+- [x] Implementar preview e relatório
+- [x] Criar template CSV para download
+- [ ] Testar importação
+
+## 📥 Importação de Videoaulas via CSV
+- [ ] Criar procedure backend importVideoaulas
+- [ ] Criar página /admin/importar/videoaulas
+- [ ] Adicionar validação de dados (disciplina válida, ano/bimestre)
+- [ ] Implementar preview e relatório
+- [ ] Criar template CSV para download
+- [ ] Testar importação
+
+## 📊 Exportação de Relatórios de Histórico
+- [ ] Adicionar botão de exportação na página de histórico
+- [ ] Implementar exportação para CSV
+- [ ] Implementar exportação para PDF
+- [ ] Testar downloads
+
+## 🔐 Sistema de Login
+- [ ] Criar página de login customizada (/login)
+- [ ] Implementar formulário de login com validação
+- [ ] Adicionar logo e design neon
+- [ ] Redirecionar após login bem-sucedido
+- [ ] Testar fluxo de login
+
+## 👥 Perfis de Usuário
+- [ ] Adicionar campo 'perfil' na tabela users (admin, editor, visualizador)
+- [ ] Criar middleware de autorização por perfil
+- [ ] Implementar controle de acesso nas rotas admin
+- [ ] Criar página de gerenciamento de usuários
+- [ ] Adicionar indicador de perfil no header
+- [ ] Testar permissões por perfil

@@ -650,6 +650,52 @@ export const appRouter = router({
           
           return results;
         }),
+      
+      disciplinas: adminProcedure
+        .input(z.array(z.object({
+          codigo: z.string().min(1),
+          nome: z.string().min(1),
+          cursos: z.array(z.number()).optional(), // IDs dos cursos
+        })))
+        .mutation(async ({ input }) => {
+          const db = await getDb();
+          if (!db) throw new Error('Database not available');
+          const results = [];
+          
+          for (const disc of input) {
+            try {
+              // Verificar se disciplina já existe
+              const [existing] = await db.select().from(disciplinas).where(eq(disciplinas.codigo, disc.codigo)).limit(1);
+              
+              if (existing) {
+                results.push({ codigo: disc.codigo, status: 'error', message: 'Disciplina já existe' });
+                continue;
+              }
+              
+              // Criar disciplina
+              const [novaDisciplina] = await db.insert(disciplinas).values({
+                codigo: disc.codigo,
+                nome: disc.nome,
+              }).$returningId();
+              
+              // Associar cursos se fornecidos
+              if (disc.cursos && disc.cursos.length > 0) {
+                for (const cursoId of disc.cursos) {
+                  await db.insert(cursosDisciplinas).values({
+                    cursoId,
+                    disciplinaId: novaDisciplina.id,
+                  });
+                }
+              }
+              
+              results.push({ codigo: disc.codigo, status: 'success', message: 'Criada com sucesso' });
+            } catch (error) {
+              results.push({ codigo: disc.codigo, status: 'error', message: error instanceof Error ? error.message : 'Erro desconhecido' });
+            }
+          }
+          
+          return results;
+        }),
     }),
     
     historico: router({

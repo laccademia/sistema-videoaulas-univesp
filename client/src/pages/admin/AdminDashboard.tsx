@@ -1,7 +1,7 @@
 import AdminLayout from "@/components/AdminLayout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { trpc } from "@/lib/trpc";
-import { Video, BookOpen, GraduationCap, Users, Palette, TrendingUp } from "lucide-react";
+import { Video, BookOpen, GraduationCap, Users, Palette, TrendingUp, Upload, History, FileText } from "lucide-react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 
@@ -193,6 +193,54 @@ export default function AdminDashboard() {
                   </CardTitle>
                   <CardDescription>
                     Visualizar, editar e excluir designers instrucionais
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+            </Link>
+          </div>
+        </div>
+
+        {/* Importação e Relatórios */}
+        <div>
+          <h2 className="text-xl font-semibold mb-4">Importação e Relatórios</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <Link href="/admin/importar/acessibilidade">
+              <Card className="hover:shadow-lg transition-all cursor-pointer">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Upload className="h-5 w-5" />
+                    Importar Acessibilidade
+                  </CardTitle>
+                  <CardDescription>
+                    Atualizar links de Libras, Audiodescrição e CC em lote
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+            </Link>
+
+            <Link href="/admin/importar/disciplinas">
+              <Card className="hover:shadow-lg transition-all cursor-pointer">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <BookOpen className="h-5 w-5" />
+                    Importar Disciplinas
+                  </CardTitle>
+                  <CardDescription>
+                    Cadastrar novas disciplinas em lote via CSV
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+            </Link>
+
+            <Link href="/admin/importacoes/historico">
+              <Card className="hover:shadow-lg transition-all cursor-pointer">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <History className="h-5 w-5" />
+                    Histórico de Importações
+                  </CardTitle>
+                  <CardDescription>
+                    Visualizar registro de todas as importações realizadas
                   </CardDescription>
                 </CardHeader>
               </Card>
