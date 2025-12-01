@@ -17,14 +17,7 @@ const requireUser = t.middleware(async opts => {
     throw new TRPCError({ code: "UNAUTHORIZED", message: UNAUTHED_ERR_MSG });
   }
 
-  // Verifica se o usuário foi aprovado
-  if (ctx.user.status !== 'approved') {
-    throw new TRPCError({ 
-      code: "FORBIDDEN", 
-      message: "Seu acesso ainda não foi aprovado. Aguarde a aprovação do administrador." 
-    });
-  }
-
+  // Todos os usuários autenticados têm acesso (viewer, admin)
   return next({
     ctx: {
       ...ctx,
@@ -43,8 +36,7 @@ export const adminProcedure = t.procedure.use(
       throw new TRPCError({ code: "FORBIDDEN", message: NOT_ADMIN_ERR_MSG });
     }
 
-    // Admin sempre tem acesso, mesmo se status não for approved
-    // (para permitir que owner gerencie usuários)
+    // Apenas admins podem acessar procedures administrativos
 
     return next({
       ctx: {

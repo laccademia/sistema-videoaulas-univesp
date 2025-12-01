@@ -2,6 +2,7 @@ import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, adminProcedure, router } from "./_core/trpc";
+import { ENV } from "./_core/env";
 import { z } from "zod";
 import { getDb } from "./db";
 import { disciplinas, videoaulas, ofertasDisciplinas, cursosDisciplinas, historicoImportacoes, users } from "../drizzle/schema";
@@ -839,55 +840,45 @@ export const appRouter = router({
       return await db.select().from(users).orderBy(desc(users.createdAt));
     }),
 
-    // Listar usuários pendentes (apenas admin)
-    listPending: adminProcedure.query(async () => {
-      const db = await getDb();
-      if (!db) return [];
-      return await db.select().from(users)
-        .where(eq(users.status, 'pending'))
-        .orderBy(desc(users.createdAt));
-    }),
-
-    // Aprovar usuário (apenas admin)
-    approve: adminProcedure
-      .input(z.object({ userId: z.number() }))
-      .mutation(async ({ input }) => {
-        const db = await getDb();
-        if (!db) throw new Error('Database not available');
-        
-        await db.update(users)
-          .set({ status: 'approved' })
-          .where(eq(users.id, input.userId));
-        
-        return { success: true };
-      }),
-
-    // Rejeitar usuário (apenas admin)
-    reject: adminProcedure
-      .input(z.object({ userId: z.number() }))
-      .mutation(async ({ input }) => {
-        const db = await getDb();
-        if (!db) throw new Error('Database not available');
-        
-        await db.update(users)
-          .set({ status: 'rejected' })
-          .where(eq(users.id, input.userId));
-        
-        return { success: true };
-      }),
-
-    // Alterar role do usuário (apenas admin)
-    changeRole: adminProcedure
+    // Promover usuário (viewer → admin)
+    promote: adminProcedure
       .input(z.object({ 
         userId: z.number(),
-        role: z.enum(['user', 'admin'])
+        targetOpenId: z.string()
       }))
-      .mutation(async ({ input }) => {
+      .mutation(async ({ input, ctx }) => {
         const db = await getDb();
         if (!db) throw new Error('Database not available');
         
+        // Proteção: não pode modificar o owner
+        if (input.targetOpenId === ENV.ownerOpenId) {
+          throw new Error('Não é possível modificar o owner');
+        }
+        
         await db.update(users)
-          .set({ role: input.role })
+          .set({ role: 'admin' })
+          .where(eq(users.id, input.userId));
+        
+        return { success: true };
+      }),
+
+    // Rebaixar usuário (admin → viewer)
+    demote: adminProcedure
+      .input(z.object({ 
+        userId: z.number(),
+        targetOpenId: z.string()
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const db = await getDb();
+        if (!db) throw new Error('Database not available');
+        
+        // Proteção: não pode modificar o owner
+        if (input.targetOpenId === ENV.ownerOpenId) {
+          throw new Error('Não é possível modificar o owner');
+        }
+        
+        await db.update(users)
+          .set({ role: 'viewer' })
           .where(eq(users.id, input.userId));
         
         return { success: true };

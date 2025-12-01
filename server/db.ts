@@ -72,25 +72,17 @@ export async function upsertUser(user: InsertUser): Promise<void> {
       values.lastSignedIn = user.lastSignedIn;
       updateSet.lastSignedIn = user.lastSignedIn;
     }
-    if (user.role !== undefined) {
-      values.role = user.role;
-      updateSet.role = user.role;
-    } else if (user.openId === ENV.ownerOpenId) {
+    // Proteção do owner: sempre admin, não pode ser rebaixado
+    if (user.openId === ENV.ownerOpenId) {
       values.role = 'admin';
       updateSet.role = 'admin';
-    }
-
-    // Define status: owner sempre approved, novos usuários pending
-    if (user.status !== undefined) {
-      values.status = user.status;
-      updateSet.status = user.status;
-    } else if (user.openId === ENV.ownerOpenId) {
-      values.status = 'approved';
-      updateSet.status = 'approved';
+    } else if (user.role !== undefined) {
+      values.role = user.role;
+      updateSet.role = user.role;
     } else {
-      // Novos usuários começam como pending
-      values.status = 'pending';
-      // Não atualiza status em updates subsequentes (preserva aprovação)
+      // Novos usuários começam como viewer
+      values.role = 'viewer';
+      // Não atualiza role em updates subsequentes (preserva promoções)
     }
 
     if (!values.lastSignedIn) {

@@ -637,3 +637,45 @@
 - [x] Adicionar rota /admin/usuarios e link no AdminDashboard
 - [x] Testar fluxo completo de login → solicitação → aprovação → acesso
 - [x] Salvar checkpoint final
+
+
+## 👥 Sistema de Hierarquia de Usuários (3 Níveis)
+
+### Modificações no Schema
+- [x] Modificar enum de role: adicionar "viewer" como terceira opção (owner/admin/viewer)
+- [x] Remover campo status (pending/approved/rejected) - não é mais necessário
+- [x] Aplicar migrations no banco de dados
+
+### Lógica de Backend
+- [x] Atualizar upsertUser: novos usuários = "viewer" por padrão
+- [x] Atualizar upsertUser: owner sempre mantém role "admin" (proteção)
+- [x] Remover notificações de novo usuário (não precisa mais aprovar)
+- [x] Atualizar procedures: permitir apenas admin promover viewer → admin
+- [x] Adicionar proteção: owner não pode ser excluída ou rebaixada
+- [x] Remover procedures de approve/reject (não são mais necessárias)
+
+### Frontend - Gerenciamento de Usuários
+- [x] Atualizar GerenciarUsuarios.tsx: remover seção de pendentes
+- [x] Adicionar botões de promoção: viewer → admin
+- [x] Adicionar botões de rebaixamento: admin → viewer
+- [x] Adicionar badge visual "OWNER" para identificar owner
+- [x] Proteger owner: desabilitar botões de exclusão/rebaixamento
+- [x] Remover filtros de status (pending/approved/rejected)
+
+### Painel Administrativo
+- [x] Adicionar botão "Voltar para Home" no AdminDashboard
+- [x] Testar navegação admin → home
+
+### Limpeza
+- [x] Remover página Login.tsx (não é mais necessária)
+- [x] Remover rota /login do App.tsx
+- [x] Atualizar AuthContext: remover campo status do tipo User
+- [x] Remover middleware de verificação de status do trpc.ts
+
+### Testes
+- [x] Testar entrada de novo usuário (deve ser viewer automaticamente)
+- [x] Testar promoção viewer → admin
+- [x] Testar rebaixamento admin → viewer
+- [x] Testar proteção do owner (não pode ser modificado)
+- [x] Testar navegação entre admin e home
+- [x] Salvar checkpoint final

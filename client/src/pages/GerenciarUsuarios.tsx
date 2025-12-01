@@ -2,9 +2,8 @@ import Layout from "@/components/Layout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { trpc } from "@/lib/trpc";
-import { CheckCircle, XCircle, Clock, Users as UsersIcon, Mail, Calendar, Shield } from "lucide-react";
+import { ArrowUp, ArrowDown, Users as UsersIcon, Mail, Calendar, Shield, Crown } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-
 import {
   Table,
   TableBody,
@@ -13,43 +12,31 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function GerenciarUsuarios() {
-
+  const { user: currentUser } = useAuth();
   const utils = trpc.useUtils();
   
-  const { data: pendingUsers, isLoading: loadingPending } = trpc.users.listPending.useQuery();
   const { data: allUsers, isLoading: loadingAll } = trpc.users.list.useQuery();
   
-  const approveMutation = trpc.users.approve.useMutation({
+  const promoteMutation = trpc.users.promote.useMutation({
     onSuccess: () => {
-      alert("✅ Usuário aprovado com sucesso!");
-      utils.users.listPending.invalidate();
+      alert("✅ Usuário promovido para Admin!");
       utils.users.list.invalidate();
     },
     onError: (error) => {
-      alert(`❌ Erro ao aprovar: ${error.message}`);
+      alert(`❌ Erro ao promover: ${error.message}`);
     },
   });
 
-  const rejectMutation = trpc.users.reject.useMutation({
+  const demoteMutation = trpc.users.demote.useMutation({
     onSuccess: () => {
-      alert("❌ Usuário rejeitado.");
-      utils.users.listPending.invalidate();
+      alert("⬇️ Usuário rebaixado para Viewer.");
       utils.users.list.invalidate();
     },
     onError: (error) => {
-      alert(`❌ Erro ao rejeitar: ${error.message}`);
-    },
-  });
-
-  const changeRoleMutation = trpc.users.changeRole.useMutation({
-    onSuccess: () => {
-      alert("✅ Permissão alterada com sucesso!");
-      utils.users.list.invalidate();
-    },
-    onError: (error) => {
-      alert(`❌ Erro ao alterar permissão: ${error.message}`);
+      alert(`❌ Erro ao rebaixar: ${error.message}`);
     },
   });
 
@@ -63,29 +50,19 @@ export default function GerenciarUsuarios() {
     });
   };
 
-  const getStatusBadge = (status: string) => {
-    switch (status) {
-      case 'pending':
-        return <Badge variant="outline" style={{ borderColor: '#FFE600', color: '#FFE600' }}>
-          <Clock className="h-3 w-3 mr-1" />
-          Pendente
-        </Badge>;
-      case 'approved':
-        return <Badge variant="outline" style={{ borderColor: '#00FF55', color: '#00FF55' }}>
-          <CheckCircle className="h-3 w-3 mr-1" />
-          Aprovado
-        </Badge>;
-      case 'rejected':
-        return <Badge variant="outline" style={{ borderColor: '#FF3333', color: '#FF3333' }}>
-          <XCircle className="h-3 w-3 mr-1" />
-          Rejeitado
-        </Badge>;
-      default:
-        return null;
+  const getRoleBadge = (role: string, openId: string) => {
+    // Verifica se é owner (você)
+    const isOwner = openId === import.meta.env.VITE_OWNER_OPEN_ID;
+    
+    if (isOwner) {
+      return (
+        <Badge variant="outline" style={{ borderColor: '#FFD700', color: '#FFD700' }}>
+          <Crown className="h-3 w-3 mr-1" />
+          Owner
+        </Badge>
+      );
     }
-  };
-
-  const getRoleBadge = (role: string) => {
+    
     return role === 'admin' ? (
       <Badge variant="outline" style={{ borderColor: '#9D00FF', color: '#9D00FF' }}>
         <Shield className="h-3 w-3 mr-1" />
@@ -93,9 +70,13 @@ export default function GerenciarUsuarios() {
       </Badge>
     ) : (
       <Badge variant="outline" style={{ borderColor: '#00C2FF', color: '#00C2FF' }}>
-        Usuário
+        Viewer
       </Badge>
     );
+  };
+
+  const isOwner = (openId: string) => {
+    return openId === import.meta.env.VITE_OWNER_OPEN_ID;
   };
 
   return (
@@ -105,109 +86,73 @@ export default function GerenciarUsuarios() {
           {/* Header */}
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-white mb-2">Gerenciar Usuários</h1>
-            <p className="text-gray-400">Aprovar ou rejeitar solicitações de acesso</p>
+            <p className="text-gray-400">Promover ou rebaixar usuários no sistema</p>
           </div>
 
-          {/* Solicitações Pendentes */}
+          {/* Hierarquia de Permissões */}
           <Card 
             className="mb-8"
             style={{ 
               backgroundColor: '#141C2F',
-              border: '2px solid #FFE600'
+              border: '1px solid rgba(255,255,255,0.1)'
             }}
           >
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-white">
-                <Clock className="h-5 w-5" style={{ color: '#FFE600' }} />
-                Solicitações Pendentes
-                {pendingUsers && pendingUsers.length > 0 && (
-                  <Badge 
-                    variant="outline" 
-                    style={{ 
-                      borderColor: '#FFE600', 
-                      color: '#FFE600',
-                      marginLeft: '8px'
-                    }}
-                  >
-                    {pendingUsers.length}
-                  </Badge>
-                )}
-              </CardTitle>
+              <CardTitle className="text-white">📊 Hierarquia de Permissões</CardTitle>
               <CardDescription className="text-gray-400">
-                Usuários aguardando aprovação para acessar o sistema
+                3 níveis de acesso no sistema
               </CardDescription>
             </CardHeader>
             <CardContent>
-              {loadingPending ? (
-                <div className="text-center text-gray-400 py-8">Carregando...</div>
-              ) : pendingUsers && pendingUsers.length > 0 ? (
-                <div className="space-y-4">
-                  {pendingUsers.map((user) => (
-                    <div
-                      key={user.id}
-                      className="p-4 rounded-lg border"
-                      style={{ 
-                        backgroundColor: 'rgba(255, 230, 0, 0.05)',
-                        borderColor: 'rgba(255, 230, 0, 0.3)'
-                      }}
-                    >
-                      <div className="flex items-start justify-between">
-                        <div className="flex-1">
-                          <div className="flex items-center gap-3 mb-2">
-                            <h3 className="text-lg font-semibold text-white">
-                              {user.name || 'Nome não disponível'}
-                            </h3>
-                            {getStatusBadge(user.status)}
-                          </div>
-                          
-                          <div className="space-y-1 text-sm text-gray-400">
-                            {user.email && (
-                              <div className="flex items-center gap-2">
-                                <Mail className="h-4 w-4" />
-                                {user.email}
-                              </div>
-                            )}
-                            <div className="flex items-center gap-2">
-                              <Calendar className="h-4 w-4" />
-                              Solicitado em {formatDate(user.createdAt)}
-                            </div>
-                          </div>
-                        </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div 
+                  className="p-4 rounded-lg border-2"
+                  style={{ 
+                    backgroundColor: 'rgba(255, 215, 0, 0.05)',
+                    borderColor: '#FFD700'
+                  }}
+                >
+                  <div className="flex items-center gap-2 mb-2">
+                    <Crown className="h-5 w-5" style={{ color: '#FFD700' }} />
+                    <h3 className="font-semibold text-white">Owner</h3>
+                  </div>
+                  <p className="text-sm text-gray-400">
+                    Acesso total ao sistema e banco de dados. Não pode ser modificado.
+                  </p>
+                </div>
 
-                        <div className="flex gap-2 ml-4">
-                          <Button
-                            onClick={() => approveMutation.mutate({ userId: user.id })}
-                            disabled={approveMutation.isPending}
-                            style={{ 
-                              backgroundColor: '#00FF55',
-                              color: '#0A101F'
-                            }}
-                          >
-                            <CheckCircle className="h-4 w-4 mr-2" />
-                            Aprovar
-                          </Button>
-                          <Button
-                            onClick={() => rejectMutation.mutate({ userId: user.id })}
-                            disabled={rejectMutation.isPending}
-                            variant="outline"
-                            style={{ 
-                              borderColor: '#FF3333',
-                              color: '#FF3333'
-                            }}
-                          >
-                            <XCircle className="h-4 w-4 mr-2" />
-                            Rejeitar
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+                <div 
+                  className="p-4 rounded-lg border-2"
+                  style={{ 
+                    backgroundColor: 'rgba(157, 0, 255, 0.05)',
+                    borderColor: '#9D00FF'
+                  }}
+                >
+                  <div className="flex items-center gap-2 mb-2">
+                    <Shield className="h-5 w-5" style={{ color: '#9D00FF' }} />
+                    <h3 className="font-semibold text-white">Admin</h3>
+                  </div>
+                  <p className="text-sm text-gray-400">
+                    Acesso ao painel administrativo. Pode gerenciar conteúdo e promover usuários.
+                  </p>
                 </div>
-              ) : (
-                <div className="text-center text-gray-400 py-8">
-                  Nenhuma solicitação pendente
+
+                <div 
+                  className="p-4 rounded-lg border-2"
+                  style={{ 
+                    backgroundColor: 'rgba(0, 194, 255, 0.05)',
+                    borderColor: '#00C2FF'
+                  }}
+                >
+                  <div className="flex items-center gap-2 mb-2">
+                    <UsersIcon className="h-5 w-5" style={{ color: '#00C2FF' }} />
+                    <h3 className="font-semibold text-white">Viewer</h3>
+                  </div>
+                  <p className="text-sm text-gray-400">
+                    Apenas visualização. Acesso às páginas públicas do sistema.
+                  </p>
                 </div>
-              )}
+              </div>
             </CardContent>
           </Card>
 
@@ -217,6 +162,18 @@ export default function GerenciarUsuarios() {
               <CardTitle className="flex items-center gap-2 text-white">
                 <UsersIcon className="h-5 w-5" style={{ color: '#00C2FF' }} />
                 Todos os Usuários
+                {allUsers && (
+                  <Badge 
+                    variant="outline" 
+                    style={{ 
+                      borderColor: '#00C2FF', 
+                      color: '#00C2FF',
+                      marginLeft: '8px'
+                    }}
+                  >
+                    {allUsers.length}
+                  </Badge>
+                )}
               </CardTitle>
               <CardDescription className="text-gray-400">
                 Lista completa de usuários do sistema
@@ -232,7 +189,6 @@ export default function GerenciarUsuarios() {
                       <TableRow style={{ borderColor: 'rgba(255,255,255,0.1)' }}>
                         <TableHead className="text-gray-400">Nome</TableHead>
                         <TableHead className="text-gray-400">Email</TableHead>
-                        <TableHead className="text-gray-400">Status</TableHead>
                         <TableHead className="text-gray-400">Permissão</TableHead>
                         <TableHead className="text-gray-400">Cadastro</TableHead>
                         <TableHead className="text-gray-400">Ações</TableHead>
@@ -251,31 +207,53 @@ export default function GerenciarUsuarios() {
                             {user.email || 'N/A'}
                           </TableCell>
                           <TableCell>
-                            {getStatusBadge(user.status)}
-                          </TableCell>
-                          <TableCell>
-                            {getRoleBadge(user.role)}
+                            {getRoleBadge(user.role, user.openId)}
                           </TableCell>
                           <TableCell className="text-gray-400 text-sm">
                             {formatDate(user.createdAt)}
                           </TableCell>
                           <TableCell>
-                            {user.status === 'approved' && (
-                              <Button
-                                onClick={() => changeRoleMutation.mutate({
-                                  userId: user.id,
-                                  role: user.role === 'admin' ? 'user' : 'admin'
-                                })}
-                                disabled={changeRoleMutation.isPending}
-                                variant="outline"
-                                size="sm"
-                                style={{ 
-                                  borderColor: '#9D00FF',
-                                  color: '#9D00FF'
-                                }}
-                              >
-                                {user.role === 'admin' ? 'Remover Admin' : 'Tornar Admin'}
-                              </Button>
+                            {isOwner(user.openId) ? (
+                              <span className="text-xs text-gray-500">Protegido</span>
+                            ) : (
+                              <div className="flex gap-2">
+                                {user.role === 'viewer' && (
+                                  <Button
+                                    onClick={() => promoteMutation.mutate({
+                                      userId: user.id,
+                                      targetOpenId: user.openId
+                                    })}
+                                    disabled={promoteMutation.isPending}
+                                    variant="outline"
+                                    size="sm"
+                                    style={{ 
+                                      borderColor: '#9D00FF',
+                                      color: '#9D00FF'
+                                    }}
+                                  >
+                                    <ArrowUp className="h-4 w-4 mr-1" />
+                                    Promover
+                                  </Button>
+                                )}
+                                {user.role === 'admin' && (
+                                  <Button
+                                    onClick={() => demoteMutation.mutate({
+                                      userId: user.id,
+                                      targetOpenId: user.openId
+                                    })}
+                                    disabled={demoteMutation.isPending}
+                                    variant="outline"
+                                    size="sm"
+                                    style={{ 
+                                      borderColor: '#00C2FF',
+                                      color: '#00C2FF'
+                                    }}
+                                  >
+                                    <ArrowDown className="h-4 w-4 mr-1" />
+                                    Rebaixar
+                                  </Button>
+                                )}
+                              </div>
                             )}
                           </TableCell>
                         </TableRow>

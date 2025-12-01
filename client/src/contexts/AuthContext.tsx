@@ -5,8 +5,7 @@ interface User {
   id: number;
   name: string | null;
   email: string | null;
-  role: "user" | "admin";
-  status: "pending" | "approved" | "rejected";
+  role: "viewer" | "admin";
 }
 
 interface AuthContextType {

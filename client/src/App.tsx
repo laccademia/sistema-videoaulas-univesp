@@ -33,13 +33,12 @@ import ImportarAcessibilidade from "./pages/admin/import/ImportarAcessibilidade"
 import ImportarDisciplinas from "./pages/admin/import/ImportarDisciplinas";
 import ImportarVideoaulas from "./pages/admin/import/ImportarVideoaulas";
 import HistoricoImportacoes from "./pages/admin/import/HistoricoImportacoes";
-import Login from "./pages/Login";
 import GerenciarUsuarios from "./pages/GerenciarUsuarios";
 
 function Router() {
   return (
     <Switch>
-      <Route path={"/login"} component={Login} />
+
       <Route path={"/"} component={Home} />
       <Route path={"/cursos"} component={Cursos} />
       <Route path={"/cursos/:id"} component={CursoDetalhes} />
