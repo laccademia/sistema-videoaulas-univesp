@@ -828,3 +828,14 @@
 - [x] Substituir adminProcedure por publicProcedure em todos os endpoints administrativos
 - [x] Corrigir erros TypeScript após substituição
 - [x] Reiniciar servidor para aplicar mudanças
+
+
+## 📦 Export para GitHub
+
+- [ ] Verificar repositórios GitHub do usuário
+- [ ] Criar ou selecionar repositório
+- [ ] Preparar .gitignore
+- [ ] Atualizar README.md com instruções de deploy
+- [ ] Fazer commit inicial
+- [ ] Push para GitHub
+- [ ] Validar repositório online
