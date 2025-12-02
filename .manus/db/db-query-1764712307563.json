@@ -1,0 +1,14 @@
+{
+  "query": "SELECT id, titulo FROM videoaulas WHERE id = 61429;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4Q6CVQSvv4vsSx3.a0e54a3010e2 --database AgAQ7M7gXFHDiuyXgHyZLe --execute SELECT id, titulo FROM videoaulas WHERE id = 61429;",
+  "rows": [
+    {
+      "id": "61429",
+      "titulo": "✅ TESTE FINAL - CRUD 100% FUNCIONANDO"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitulo\n61429\t✅ TESTE FINAL - CRUD 100% FUNCIONANDO\n",
+  "stderr": "",
+  "execution_time_ms": 50
+}

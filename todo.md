@@ -832,10 +832,18 @@
 
 ## 📦 Export para GitHub
 
-- [ ] Verificar repositórios GitHub do usuário
-- [ ] Criar ou selecionar repositório
-- [ ] Preparar .gitignore
-- [ ] Atualizar README.md com instruções de deploy
-- [ ] Fazer commit inicial
-- [ ] Push para GitHub
-- [ ] Validar repositório online
+- [x] Verificar repositórios GitHub do usuário
+- [x] Selecionar repositório existente (laccademia/sistema-videoaulas-univesp)
+- [x] Verificar .gitignore (já configurado)
+- [x] Verificar README.md (já completo com instruções de deploy)
+- [x] Fazer commit das mudanças recentes
+- [x] Push para GitHub (500 objetos, 2.22 MB)
+- [x] Validar repositório online (público, URL: https://github.com/laccademia/sistema-videoaulas-univesp)
+
+
+## 🔧 Correção de CRUD
+
+- [x] Identificar problemas de CRUD - routers mal configurados (admin.* vs routers diretos)
+- [x] Remover validação min=1 de semana e numeroAula (permitir 0)
+- [x] Corrigir mapeamento de routers (list em routers públicos, CRUD em admin.*, getById em routers públicos)
+- [x] Validar operações create, update, delete

@@ -28,7 +28,7 @@ export default function ImportarDisciplinas() {
   const [importResults, setImportResults] = useState<ImportResult[]>([]);
   const [isProcessing, setIsProcessing] = useState(false);
 
-  const importMutation = trpc.admin.import.disciplinas.useMutation();
+  const importMutation = trpc.import.disciplinas.useMutation();
   const salvarHistoricoMutation = trpc.admin.historico.salvar.useMutation();
   const { data: cursos } = trpc.cursos.list.useQuery();
 

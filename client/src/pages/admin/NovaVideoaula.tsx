@@ -183,7 +183,7 @@ export default function NovaVideoaula() {
                   <Input
                     id="semana"
                     type="number"
-                    min="1"
+                    min="0"
                     value={formData.semana}
                     onChange={(e) =>
                       setFormData({ ...formData, semana: e.target.value })
@@ -196,7 +196,7 @@ export default function NovaVideoaula() {
                   <Input
                     id="numeroAula"
                     type="number"
-                    min="1"
+                    min="0"
                     value={formData.numeroAula}
                     onChange={(e) =>
                       setFormData({ ...formData, numeroAula: e.target.value })

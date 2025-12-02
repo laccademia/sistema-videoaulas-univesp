@@ -28,7 +28,7 @@ export default function ImportarAcessibilidade() {
   const [importResults, setImportResults] = useState<ImportResult[]>([]);
   const [isProcessing, setIsProcessing] = useState(false);
 
-  const importMutation = trpc.admin.import.linksAcessibilidade.useMutation();
+  const importMutation = trpc.import.linksAcessibilidade.useMutation();
   const salvarHistoricoMutation = trpc.admin.historico.salvar.useMutation();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {

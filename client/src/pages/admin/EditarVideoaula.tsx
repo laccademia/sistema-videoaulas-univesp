@@ -44,8 +44,12 @@ export default function EditarVideoaula() {
     { enabled: !!videoaulaId }
   );
 
+  const utils = trpc.useUtils();
+
   const updateMutation = trpc.admin.videoaulas.update.useMutation({
     onSuccess: () => {
+      utils.videoaulas.list.invalidate();
+      utils.videoaulas.getById.invalidate({ id: videoaulaId! });
       toast.success("Videoaula atualizada com sucesso!");
       setLocation("/admin/videoaulas");
     },
@@ -86,8 +90,8 @@ export default function EditarVideoaula() {
 
     updateMutation.mutate({
       id: videoaulaId,
-      semana: parseInt(formData.semana),
-      numeroAula: parseInt(formData.numeroAula),
+      semana: parseInt(formData.semana) || 0,
+      numeroAula: parseInt(formData.numeroAula) || 0,
       titulo: formData.titulo,
       sinopse: formData.sinopse || undefined,
       linkYoutubeOriginal: formData.linkYoutubeOriginal || undefined,
@@ -168,7 +172,7 @@ export default function EditarVideoaula() {
                   <Input
                     id="semana"
                     type="number"
-                    min="1"
+                    min="0"
                     value={formData.semana}
                     onChange={(e) =>
                       setFormData({ ...formData, semana: e.target.value })
@@ -181,7 +185,7 @@ export default function EditarVideoaula() {
                   <Input
                     id="numeroAula"
                     type="number"
-                    min="1"
+                    min="0"
                     value={formData.numeroAula}
                     onChange={(e) =>
                       setFormData({ ...formData, numeroAula: e.target.value })

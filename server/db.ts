@@ -431,7 +431,12 @@ export async function updateVideoaula(id: number, data: Partial<InsertVideoaula>
   const db = await getDb();
   if (!db) throw new Error("Database not available");
   
-  await db.update(videoaulas).set(data).where(eq(videoaulas.id, id));
+  console.log('[DB UPDATE] ID:', id);
+  console.log('[DB UPDATE] Data:', JSON.stringify(data, null, 2));
+  
+  const result = await db.update(videoaulas).set(data).where(eq(videoaulas.id, id));
+  
+  console.log('[DB UPDATE] Result:', result);
   return true;
 }
 

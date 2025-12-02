@@ -465,8 +465,8 @@ export const appRouter = router({
           bimestreOperacional: z.number(),
           professorId: z.number().optional(),
           diId: z.number().optional(),
-          semana: z.number(),
-          numeroAula: z.number(),
+          semana: z.number().min(0),
+          numeroAula: z.number().min(0),
           titulo: z.string(),
           sinopse: z.string().optional(),
           linkYoutubeOriginal: z.string().optional(),
@@ -513,8 +513,8 @@ export const appRouter = router({
       update: publicProcedure
         .input(z.object({
           id: z.number(),
-          semana: z.number().optional(),
-          numeroAula: z.number().optional(),
+          semana: z.number().min(0).optional(),
+          numeroAula: z.number().min(0).optional(),
           titulo: z.string().optional(),
           sinopse: z.string().optional(),
           linkYoutubeOriginal: z.string().optional(),
@@ -528,9 +528,17 @@ export const appRouter = router({
           linkDownload: z.string().optional(),
         }))
         .mutation(async ({ input }) => {
-          const { id, ...data } = input;
-          await updateVideoaula(id, data);
-          return { success: true };
+          try {
+            console.log('[UPDATE VIDEOAULA] Input recebido:', JSON.stringify(input, null, 2));
+            const { id, ...data } = input;
+            console.log('[UPDATE VIDEOAULA] Data para update:', JSON.stringify(data, null, 2));
+            await updateVideoaula(id, data);
+            console.log('[UPDATE VIDEOAULA] Update concluído com sucesso');
+            return { success: true };
+          } catch (error) {
+            console.error('[UPDATE VIDEOAULA] ERRO:', error);
+            throw error;
+          }
         }),
       
       delete: publicProcedure

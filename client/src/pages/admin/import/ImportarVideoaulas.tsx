@@ -35,7 +35,7 @@ export default function ImportarVideoaulas() {
   const [importResults, setImportResults] = useState<ImportResult[]>([]);
   const [isProcessing, setIsProcessing] = useState(false);
 
-  const importMutation = trpc.admin.import.videoaulas.useMutation();
+  const importMutation = trpc.import.videoaulas.useMutation();
   const salvarHistoricoMutation = trpc.admin.historico.salvar.useMutation();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
