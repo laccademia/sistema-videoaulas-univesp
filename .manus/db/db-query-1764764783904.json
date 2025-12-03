@@ -1,0 +1,25 @@
+{
+  "query": "SELECT \n  'Total geral' as categoria,\n  COUNT(*) as quantidade,\n  '' as detalhes\nFROM videoaulas\n\nUNION ALL\n\nSELECT \n  'Com oferta válida' as categoria,\n  COUNT(*) as quantidade,\n  '' as detalhes\nFROM videoaulas v\nWHERE v.ofertaDisciplinaId IN (SELECT id FROM ofertasDisciplinas)\n\nUNION ALL\n\nSELECT \n  'Órfãs (sem oferta)' as categoria,\n  COUNT(*) as quantidade,\n  '' as detalhes\nFROM videoaulas v\nWHERE v.ofertaDisciplinaId NOT IN (SELECT id FROM ofertasDisciplinas);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4Q6CVQSvv4vsSx3.a0e54a3010e2 --database AgAQ7M7gXFHDiuyXgHyZLe --execute SELECT \n  'Total geral' as categoria,\n  COUNT(*) as quantidade,\n  '' as detalhes\nFROM videoaulas\n\nUNION ALL\n\nSELECT \n  'Com oferta válida' as categoria,\n  COUNT(*) as quantidade,\n  '' as detalhes\nFROM videoaulas v\nWHERE v.ofertaDisciplinaId IN (SELECT id FROM ofertasDisciplinas)\n\nUNION ALL\n\nSELECT \n  'Órfãs (sem oferta)' as categoria,\n  COUNT(*) as quantidade,\n  '' as detalhes\nFROM videoaulas v\nWHERE v.ofertaDisciplinaId NOT IN (SELECT id FROM ofertasDisciplinas);",
+  "rows": [
+    {
+      "categoria": "Total geral",
+      "quantidade": "1888",
+      "detalhes": ""
+    },
+    {
+      "categoria": "Órfãs (sem oferta)",
+      "quantidade": "0",
+      "detalhes": ""
+    },
+    {
+      "categoria": "Com oferta válida",
+      "quantidade": "1888",
+      "detalhes": ""
+    }
+  ],
+  "messages": [],
+  "stdout": "categoria\tquantidade\tdetalhes\nTotal geral\t1888\t\nÓrfãs (sem oferta)\t0\t\nCom oferta válida\t1888\t\n",
+  "stderr": "",
+  "execution_time_ms": 65
+}

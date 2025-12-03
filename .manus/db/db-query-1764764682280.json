@@ -1,0 +1,13 @@
+{
+  "query": "SELECT COUNT(*) as sem_oferta\nFROM videoaulas v\nWHERE v.ofertaDisciplinaId NOT IN (SELECT id FROM ofertasDisciplinas);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4Q6CVQSvv4vsSx3.a0e54a3010e2 --database AgAQ7M7gXFHDiuyXgHyZLe --execute SELECT COUNT(*) as sem_oferta\nFROM videoaulas v\nWHERE v.ofertaDisciplinaId NOT IN (SELECT id FROM ofertasDisciplinas);",
+  "rows": [
+    {
+      "sem_oferta": "0"
+    }
+  ],
+  "messages": [],
+  "stdout": "sem_oferta\n0\n",
+  "stderr": "",
+  "execution_time_ms": 60
+}

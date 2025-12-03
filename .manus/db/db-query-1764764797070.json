@@ -1,0 +1,82 @@
+{
+  "query": "SELECT \n  COALESCE(od.ano, 0) as ano,\n  COALESCE(od.bimestreOperacional, 0) as bimestre,\n  COALESCE(od.tipo, 'SEM_OFERTA') as tipo,\n  COUNT(*) as total_videoaulas\nFROM videoaulas v\nLEFT JOIN ofertasDisciplinas od ON v.ofertaDisciplinaId = od.id\nGROUP BY od.ano, od.bimestreOperacional, od.tipo\nORDER BY od.ano, od.bimestreOperacional;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4Q6CVQSvv4vsSx3.a0e54a3010e2 --database AgAQ7M7gXFHDiuyXgHyZLe --execute SELECT \n  COALESCE(od.ano, 0) as ano,\n  COALESCE(od.bimestreOperacional, 0) as bimestre,\n  COALESCE(od.tipo, 'SEM_OFERTA') as tipo,\n  COUNT(*) as total_videoaulas\nFROM videoaulas v\nLEFT JOIN ofertasDisciplinas od ON v.ofertaDisciplinaId = od.id\nGROUP BY od.ano, od.bimestreOperacional, od.tipo\nORDER BY od.ano, od.bimestreOperacional;",
+  "rows": [
+    {
+      "ano": "2023",
+      "bimestre": "1",
+      "tipo": "OFERTA",
+      "total_videoaulas": "331"
+    },
+    {
+      "ano": "2023",
+      "bimestre": "2",
+      "tipo": "OFERTA",
+      "total_videoaulas": "153"
+    },
+    {
+      "ano": "2023",
+      "bimestre": "3",
+      "tipo": "OFERTA",
+      "total_videoaulas": "172"
+    },
+    {
+      "ano": "2023",
+      "bimestre": "4",
+      "tipo": "OFERTA",
+      "total_videoaulas": "125"
+    },
+    {
+      "ano": "2024",
+      "bimestre": "1",
+      "tipo": "OFERTA",
+      "total_videoaulas": "117"
+    },
+    {
+      "ano": "2024",
+      "bimestre": "2",
+      "tipo": "OFERTA",
+      "total_videoaulas": "137"
+    },
+    {
+      "ano": "2024",
+      "bimestre": "3",
+      "tipo": "OFERTA",
+      "total_videoaulas": "194"
+    },
+    {
+      "ano": "2024",
+      "bimestre": "4",
+      "tipo": "OFERTA",
+      "total_videoaulas": "199"
+    },
+    {
+      "ano": "2025",
+      "bimestre": "1",
+      "tipo": "OFERTA",
+      "total_videoaulas": "139"
+    },
+    {
+      "ano": "2025",
+      "bimestre": "2",
+      "tipo": "OFERTA",
+      "total_videoaulas": "108"
+    },
+    {
+      "ano": "2025",
+      "bimestre": "3",
+      "tipo": "OFERTA",
+      "total_videoaulas": "78"
+    },
+    {
+      "ano": "2025",
+      "bimestre": "4",
+      "tipo": "OFERTA",
+      "total_videoaulas": "135"
+    }
+  ],
+  "messages": [],
+  "stdout": "ano\tbimestre\ttipo\ttotal_videoaulas\n2023\t1\tOFERTA\t331\n2023\t2\tOFERTA\t153\n2023\t3\tOFERTA\t172\n2023\t4\tOFERTA\t125\n2024\t1\tOFERTA\t117\n2024\t2\tOFERTA\t137\n2024\t3\tOFERTA\t194\n2024\t4\tOFERTA\t199\n2025\t1\tOFERTA\t139\n2025\t2\tOFERTA\t108\n2025\t3\tOFERTA\t78\n2025\t4\tOFERTA\t135\n",
+  "stderr": "",
+  "execution_time_ms": 59
+}

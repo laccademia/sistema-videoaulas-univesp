@@ -1,0 +1,8 @@
+{
+  "query": "SELECT \n  od.ano,\n  od.bimestre_operacional,\n  COUNT(*) as total_videoaulas\nFROM videoaulas v\nLEFT JOIN ofertas_disciplinas od ON v.oferta_disciplina_id = od.id\nGROUP BY od.ano, od.bimestre_operacional\nORDER BY od.ano, od.bimestre_operacional;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4Q6CVQSvv4vsSx3.a0e54a3010e2 --database AgAQ7M7gXFHDiuyXgHyZLe --execute SELECT \n  od.ano,\n  od.bimestre_operacional,\n  COUNT(*) as total_videoaulas\nFROM videoaulas v\nLEFT JOIN ofertas_disciplinas od ON v.oferta_disciplina_id = od.id\nGROUP BY od.ano, od.bimestre_operacional\nORDER BY od.ano, od.bimestre_operacional;",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1146 (42S02) at line 1: Table 'agaq7m7gxfhdiuyxghyzle.ofertas_disciplinas' doesn't exist"
+  ]
+}

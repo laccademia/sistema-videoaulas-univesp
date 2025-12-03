@@ -1,0 +1,9 @@
+{
+  "query": "SELECT \n  d.codigo,\n  d.nome as disciplina,\n  COUNT(DISTINCT od.ano) as anos_diferentes,\n  GROUP_CONCAT(DISTINCT CONCAT(od.ano, '.', od.bimestreOperacional, ' (', od.tipo, ')') ORDER BY od.ano SEPARATOR ', ') as ofertas\nFROM disciplinas d\nJOIN ofertasDisciplinas od ON d.id = od.disciplinaId\nJOIN videoaulas v ON od.id = v.ofertaDisciplinaId\nGROUP BY d.id, d.codigo, d.nome\nHAVING COUNT(DISTINCT od.ano) > 1\nORDER BY anos_diferentes DESC, d.codigo\nLIMIT 15;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4Q6CVQSvv4vsSx3.a0e54a3010e2 --database AgAQ7M7gXFHDiuyXgHyZLe --execute SELECT \n  d.codigo,\n  d.nome as disciplina,\n  COUNT(DISTINCT od.ano) as anos_diferentes,\n  GROUP_CONCAT(DISTINCT CONCAT(od.ano, '.', od.bimestreOperacional, ' (', od.tipo, ')') ORDER BY od.ano SEPARATOR ', ') as ofertas\nFROM disciplinas d\nJOIN ofertasDisciplinas od ON d.id = od.disciplinaId\nJOIN videoaulas v ON od.id = v.ofertaDisciplinaId\nGROUP BY d.id, d.codigo, d.nome\nHAVING COUNT(DISTINCT od.ano) > 1\nORDER BY anos_diferentes DESC, d.codigo\nLIMIT 15;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 64
+}
