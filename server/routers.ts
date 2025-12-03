@@ -5,9 +5,7 @@ import { publicProcedure, adminProcedure, router } from "./_core/trpc";
 import { ENV } from "./_core/env";
 import { z } from "zod";
 import * as SupabaseAuth from "./supabase-auth";
-import { getDb } from "./db";
-import { disciplinas, videoaulas, ofertasDisciplinas, cursosDisciplinas, historicoImportacoes, users } from "../drizzle/schema";
-import { eq, and, desc } from "drizzle-orm";
+
 // Imports do Supabase (leitura + CRUD)
 import {
   getAllCursos,
@@ -71,46 +69,7 @@ export const appRouter = router({
       }))
       .mutation(async ({ input }) => {
           const { email, password } = input;
-          
           console.log('[LOGIN] Tentando login para:', email);
-          
-          // Tentar login com credenciais do banco Manus primeiro
-          const db = await getDb();
-          if (db) {
-            console.log('[LOGIN] Buscando usuário no banco Manus...');
-            const [user] = await db.select().from(users).where(eq(users.email, email)).limit(1);
-            
-            console.log('[LOGIN] Usuário encontrado:', user ? 'SIM' : 'NÃO');
-            console.log('[LOGIN] Tem passwordHash:', user?.passwordHash ? 'SIM' : 'NÃO');
-            
-            if (user && user.passwordHash) {
-              // Verificar senha hash
-              const crypto = await import('crypto');
-              const passwordHash = crypto.createHash('sha256').update(password).digest('hex');
-              
-              console.log('[LOGIN] Hash calculado:', passwordHash);
-              console.log('[LOGIN] Hash armazenado:', user.passwordHash);
-              console.log('[LOGIN] Hashes iguais:', passwordHash === user.passwordHash);
-              
-              if (passwordHash === user.passwordHash) {
-                console.log('[LOGIN] Login bem-sucedido com credenciais do banco!');
-                return {
-                  user: {
-                    id: user.openId,
-                    email: user.email,
-                    name: user.name,
-                    role: user.role,
-                  },
-                  session: null,
-                };
-              } else {
-                console.log('[LOGIN] Senha incorreta!');
-              }
-            }
-          }
-          
-          console.log('[LOGIN] Tentando Supabase Auth...');
-          // Se não encontrou no banco ou senha incorreta, tentar Supabase Auth
           const result = await SupabaseAuth.signInWithEmail(email, password);
           return result;
         }),
@@ -699,7 +658,10 @@ export const appRouter = router({
         }),
     }),
     
-    import: router({
+    // Routers de importação removidos - dependiam do banco Manus
+    // Use o painel administrativo para CRUD individual
+    
+    /*import: router({
       linksAcessibilidade: publicProcedure
         .input(z.array(z.object({
           idTvCultura: z.string().min(1),
@@ -862,9 +824,9 @@ export const appRouter = router({
           
           return results;
         }),
-    }),
+    }),*/
     
-    historico: router({
+    /*historico: router({
       salvar: publicProcedure
         .input(z.object({
           tipo: z.enum(["acessibilidade", "disciplinas", "videoaulas"]),
@@ -912,13 +874,14 @@ export const appRouter = router({
           
           return historico;
         }),
-    }),
+    }),*/
   }),
 
   // ============================================
-  // GERENCIAMENTO DE USUÁRIOS
+  // GERENCIAMENTO DE USUÁRIOS (REMOVIDO)
   // ============================================
-  users: router({
+  // Gerenciamento de usuários removido - dependia do banco Manus
+  /*users: router({
     // Listar todos os usuários (apenas admin)
     list: publicProcedure.query(async () => {
       const db = await getDb();
@@ -969,10 +932,10 @@ export const appRouter = router({
         
         return { success: true };
       }),
-  }),
+  }),*/
 
-  // Endpoint temporário para exportar dados
-  export: router({
+  // Endpoint temporário para exportar dados (REMOVIDO)
+  /*export: router({
     allData: publicProcedure.query(async () => {
       const db = await getDb();
       if (!db) throw new Error('Database not available');
@@ -1029,7 +992,7 @@ export const appRouter = router({
           return { success: true };
         }),
     }),
-  }),
+  }),*/
 });
 
 export type AppRouter = typeof appRouter;

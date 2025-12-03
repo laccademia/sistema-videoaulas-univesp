@@ -919,3 +919,27 @@
 - [x] Atualizar routers.ts para usar apenas Supabase
 - [x] Testar CRUD no painel administrativo (CREATE, READ, DELETE validados)
 - [x] Validar sistema completo funcionando 100% com Supabase
+
+
+## 🧹 Limpeza Final - Remover Banco Manus
+
+- [x] Remover dependências do Drizzle ORM do package.json
+- [x] Remover arquivo server/db.ts (helpers do Manus)
+- [x] Remover pasta drizzle/ (schema e migrations)
+- [x] Remover imports de db.ts em routers.ts
+- [x] Remover variável DATABASE_URL do .env (se existir)
+- [x] Limpar código comentado e imports não utilizados
+- [x] Validar que nenhum código referencia o banco Manus
+- [x] Migrar autenticação OAuth para Supabase
+- [x] Remover páginas de importação em lote (dependiam do Manus)
+- [x] Remover routers de histórico e gerenciamento de usuários
+
+## 🐙 Publicação no GitHub
+
+- [ ] Verificar se repositório já existe no GitHub
+- [ ] Criar .gitignore apropriado
+- [ ] Fazer commit inicial de todos os arquivos
+- [ ] Criar repositório no GitHub via gh CLI
+- [ ] Fazer push para o repositório remoto
+- [ ] Adicionar README.md com instruções de setup
+- [ ] Criar checkpoint final

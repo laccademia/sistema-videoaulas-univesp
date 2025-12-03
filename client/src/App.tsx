@@ -13,7 +13,6 @@ import VideoaulaDetalhes from "./pages/VideoaulaDetalhes";
 import Professores from "./pages/Professores";
 import DesignersInstrucionais from "./pages/DesignersInstrucionais";
 import Login from './pages/Login';
-import ExportData from './pages/ExportData';
 
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import VideoaulasAdmin from "./pages/admin/VideoaulasAdmin";
@@ -31,18 +30,13 @@ import EditarDesigner from "./pages/admin/designers/EditarDesigner";
 import CursosAdmin from "./pages/admin/cursos/CursosAdmin";
 import NovoCurso from "./pages/admin/cursos/NovoCurso";
 import EditarCurso from "./pages/admin/cursos/EditarCurso";
-import ImportarAcessibilidade from "./pages/admin/import/ImportarAcessibilidade";
-import ImportarDisciplinas from "./pages/admin/import/ImportarDisciplinas";
-import ImportarVideoaulas from "./pages/admin/import/ImportarVideoaulas";
-import HistoricoImportacoes from "./pages/admin/import/HistoricoImportacoes";
-import Usuarios from "./pages/admin/Usuarios";
+
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function Router() {
   return (
     <Switch>
       <Route path={"/login"} component={Login} />
-      <Route path={"/export-data"}><ProtectedRoute><ExportData /></ProtectedRoute></Route>
       <Route path={"/"}><ProtectedRoute><Home /></ProtectedRoute></Route>
       <Route path={"/cursos"}><ProtectedRoute><Cursos /></ProtectedRoute></Route>
       <Route path={"/cursos/:id"}><ProtectedRoute><CursoDetalhes /></ProtectedRoute></Route>
@@ -68,11 +62,7 @@ function Router() {
       <Route path="/admin/cursos"><ProtectedRoute><CursosAdmin /></ProtectedRoute></Route>
       <Route path="/admin/cursos/novo"><ProtectedRoute><NovoCurso /></ProtectedRoute></Route>
       <Route path="/admin/cursos/:id/editar"><ProtectedRoute><EditarCurso /></ProtectedRoute></Route>
-      <Route path="/admin/importar/acessibilidade"><ProtectedRoute><ImportarAcessibilidade /></ProtectedRoute></Route>
-      <Route path="/admin/importar/disciplinas"><ProtectedRoute><ImportarDisciplinas /></ProtectedRoute></Route>
-      <Route path="/admin/importar/videoaulas"><ProtectedRoute><ImportarVideoaulas /></ProtectedRoute></Route>
-      <Route path="/admin/importacoes/historico"><ProtectedRoute><HistoricoImportacoes /></ProtectedRoute></Route>
-      <Route path="/admin/usuarios"><ProtectedRoute><Usuarios /></ProtectedRoute></Route>
+
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
     </Switch>

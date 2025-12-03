@@ -69,10 +69,6 @@ export async function signInWithEmail(email: string, password: string) {
  * Criar nova conta
  */
 export async function signUp(email: string, password: string, name?: string) {
-  // Importar getDb aqui para evitar circular dependency
-  const { getDb } = await import('./db');
-  const { users } = await import('../drizzle/schema');
-  
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
@@ -80,72 +76,26 @@ export async function signUp(email: string, password: string, name?: string) {
       data: {
         name: name || email.split('@')[0],
       },
-      emailRedirectTo: undefined, // Desabilitar redirect de confirmação
+      emailRedirectTo: undefined,
     },
   });
 
-  // Se o erro for "Database error saving new user", ignorar e continuar
-  // Isso acontece porque o Supabase tem um trigger que tenta salvar na tabela users
-  // Mas nós vamos salvar no banco Manus mesmo assim
-  if (error) {
-    if (error.message.includes('Database error')) {
-      console.warn('[SIGNUP] Ignorando erro do Supabase:', error.message);
-      console.log('[SIGNUP] Tentando fazer login para obter o user ID...');
-      
-      // Fazer login para obter o user ID
-      const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-      
-      if (signInError || !signInData.user) {
-        console.error('[SIGNUP] Não foi possível fazer login após cadastro:', signInError?.message);
-        throw new Error('Conta criada mas não foi possível fazer login automaticamente');
-      }
-      
-      console.log('[SIGNUP] Login bem-sucedido! User ID:', signInData.user.id);
-      
-      // Substituir data com os dados do login
-      (data as any).user = signInData.user;
-      (data as any).session = signInData.session;
-    } else {
-      throw error;
-    }
-  }
+  if (error) throw error;
 
-  // Criar registro na tabela users do banco Manus
+  // Criar registro na tabela users do Supabase
   if (data.user) {
-    try {
-      console.log('[SIGNUP] Tentando salvar usuário no banco Manus...');
-      console.log('[SIGNUP] User ID:', data.user.id);
-      console.log('[SIGNUP] Email:', data.user.email);
-      
-      const db = await getDb();
-      if (!db) {
-        console.error('[SIGNUP] Database não disponível!');
-        throw new Error('Database not available');
-      }
-      
-      console.log('[SIGNUP] Database conectado, inserindo...');
-      
-      const userData = {
+    const { error: insertError } = await supabase
+      .from('users')
+      .insert({
         openId: data.user.id,
         email: data.user.email || email,
         name: name || email.split('@')[0],
-        role: 'viewer' as const,
-        loginMethod: 'email' as const,
-      };
-      
-      console.log('[SIGNUP] Dados a inserir:', JSON.stringify(userData, null, 2));
-      
-      await db.insert(users).values(userData);
-      
-      console.log('[SIGNUP] Usuário salvo com sucesso no banco Manus!');
-    } catch (dbError: any) {
-      console.error('[SIGNUP] Erro ao salvar no banco:', dbError);
-      console.error('[SIGNUP] Stack:', dbError.stack);
-      console.error('[SIGNUP] Message:', dbError.message);
-      throw new Error(`Database error: ${dbError.message}`);
+        role: 'user',
+        loginMethod: 'email',
+      });
+
+    if (insertError) {
+      console.error('[SIGNUP] Erro ao salvar no Supabase:', insertError);
     }
   }
 
@@ -206,4 +156,54 @@ export async function promoteToAdmin(email: string) {
     .eq('email', email);
 
   if (error) throw error;
+}
+
+
+/**
+ * Buscar usuário por openId
+ */
+export async function getUserByOpenId(openId: string) {
+  const { data, error } = await supabase
+    .from('users')
+    .select('*')
+    .eq('openId', openId)
+    .single();
+
+  if (error) return null;
+  
+  return {
+    id: data.id,
+    openId: data.openId,
+    email: data.email,
+    name: data.name,
+    role: data.role as 'admin' | 'user',
+    createdAt: new Date(data.createdAt),
+  };
+}
+
+/**
+ * Criar ou atualizar usuário
+ */
+export async function upsertUser(userData: {
+  openId: string;
+  name?: string | null;
+  email?: string | null;
+  role?: 'admin' | 'user';
+}) {
+  const { error } = await supabase
+    .from('users')
+    .upsert({
+      openId: userData.openId,
+      email: userData.email,
+      name: userData.name,
+      role: userData.role || 'user',
+      loginMethod: 'oauth',
+    }, {
+      onConflict: 'openId'
+    });
+
+  if (error) {
+    console.error('[UPSERT_USER] Erro:', error);
+    throw error;
+  }
 }
