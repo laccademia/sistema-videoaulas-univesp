@@ -1,0 +1,18 @@
+{
+  "query": "SELECT \n  COUNT(*) as total,\n  COUNT(CASE WHEN semana IS NOT NULL THEN 1 END) as com_semana,\n  COUNT(CASE WHEN numeroAula IS NOT NULL THEN 1 END) as com_numero,\n  COUNT(CASE WHEN linkLibras IS NOT NULL AND linkLibras != '' THEN 1 END) as com_libras,\n  COUNT(CASE WHEN linkAudiodescricao IS NOT NULL AND linkAudiodescricao != '' THEN 1 END) as com_audio,\n  COUNT(CASE WHEN ccLegenda = true THEN 1 END) as com_cc\nFROM videoaulas",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4Q6CVQSvv4vsSx3.a0e54a3010e2 --database AgAQ7M7gXFHDiuyXgHyZLe --execute SELECT \n  COUNT(*) as total,\n  COUNT(CASE WHEN semana IS NOT NULL THEN 1 END) as com_semana,\n  COUNT(CASE WHEN numeroAula IS NOT NULL THEN 1 END) as com_numero,\n  COUNT(CASE WHEN linkLibras IS NOT NULL AND linkLibras != '' THEN 1 END) as com_libras,\n  COUNT(CASE WHEN linkAudiodescricao IS NOT NULL AND linkAudiodescricao != '' THEN 1 END) as com_audio,\n  COUNT(CASE WHEN ccLegenda = true THEN 1 END) as com_cc\nFROM videoaulas",
+  "rows": [
+    {
+      "total": "1888",
+      "com_semana": "1888",
+      "com_numero": "1888",
+      "com_libras": "388",
+      "com_audio": "322",
+      "com_cc": "3"
+    }
+  ],
+  "messages": [],
+  "stdout": "total\tcom_semana\tcom_numero\tcom_libras\tcom_audio\tcom_cc\n1888\t1888\t1888\t388\t322\t3\n",
+  "stderr": "",
+  "execution_time_ms": 119
+}

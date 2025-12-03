@@ -12,7 +12,7 @@ import Videoaulas from "./pages/Videoaulas";
 import VideoaulaDetalhes from "./pages/VideoaulaDetalhes";
 import Professores from "./pages/Professores";
 import DesignersInstrucionais from "./pages/DesignersInstrucionais";
-import Login from './pages/Login';
+
 
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import VideoaulasAdmin from "./pages/admin/VideoaulasAdmin";
@@ -32,19 +32,20 @@ import NovoCurso from "./pages/admin/cursos/NovoCurso";
 import EditarCurso from "./pages/admin/cursos/EditarCurso";
 
 import ProtectedRoute from "./components/ProtectedRoute";
+import LoginRedirect from "./components/LoginRedirect";
 
 function Router() {
   return (
     <Switch>
-      <Route path={"/login"} component={Login} />
-      <Route path={"/"}><ProtectedRoute><Home /></ProtectedRoute></Route>
-      <Route path={"/cursos"}><ProtectedRoute><Cursos /></ProtectedRoute></Route>
-      <Route path={"/cursos/:id"}><ProtectedRoute><CursoDetalhes /></ProtectedRoute></Route>
-      <Route path={"/disciplinas"}><ProtectedRoute><Disciplinas /></ProtectedRoute></Route>
-      <Route path={"/videoaulas"}><ProtectedRoute><Videoaulas /></ProtectedRoute></Route>
-      <Route path={"/videoaulas/:id"}><ProtectedRoute><VideoaulaDetalhes /></ProtectedRoute></Route>
-      <Route path={"/professores"}><ProtectedRoute><Professores /></ProtectedRoute></Route>
-      <Route path={"/designers-instrucionais"}><ProtectedRoute><DesignersInstrucionais /></ProtectedRoute></Route>
+      <Route path={"/"} component={Home} />
+      <Route path={"/login"} component={LoginRedirect} />
+      <Route path={"/cursos"} component={Cursos} />
+      <Route path={"/cursos/:id"} component={CursoDetalhes} />
+      <Route path={"/disciplinas"} component={Disciplinas} />
+      <Route path={"/videoaulas"} component={Videoaulas} />
+      <Route path={"/videoaulas/:id"} component={VideoaulaDetalhes} />
+      <Route path={"/professores"} component={Professores} />
+      <Route path={"/designers-instrucionais"} component={DesignersInstrucionais} />
 
       <Route path={"/admin"}><ProtectedRoute><AdminDashboard /></ProtectedRoute></Route>
       <Route path={"/admin/videoaulas"}><ProtectedRoute><VideoaulasAdmin /></ProtectedRoute></Route>

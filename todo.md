@@ -943,3 +943,26 @@
 - [x] Fazer push para o repositório remoto (laccademia/sistema-videoaulas-univesp)
 - [x] Adicionar README.md com instruções de setup
 - [ ] Criar checkpoint final
+## 🔓 Remover Página de Login
+
+- [x] Remover página Login.tsx
+- [x] Ajustar App.tsx para rota inicial ser Home (pública)
+- [x] Remover imports e referências ao Login
+- [x] Testar acesso direto à home page
+- [x] Criar rota /login que redireciona para home (dashboard)pabase (aceitar "user")
+- [ ] Implementar CRUD de Cursos no painel admin
+- [ ] Implementar CRUD de Designers no painel admin
+- [ ] Adicionar toast notifications para feedback visual
+- [ ] Testar todas as funcionalidades CRUD
+
+- [ ] Criar rota /login que redireciona para OAuth do Manus
+
+
+## 🔧 Correção de Dados Inconsistentes
+
+- [x] Investigar contagem incorreta de videoaulas (mostrando 1000 em vez de 1887)
+- [x] Corrigir dados de acessibilidade zerados (Libras, Audiodescrição, CC)
+- [x] Corrigir exibição de professores (números em vez de nomes)
+- [x] Adicionar semana e número das videoaulas nas listagens
+- [x] Validar queries do Supabase
+- [x] Testar todas as correções

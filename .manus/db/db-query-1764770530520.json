@@ -1,0 +1,90 @@
+{
+  "query": "SELECT id, semana, numeroAula, linkLibras, linkAudiodescricao, ccLegenda FROM videoaulas LIMIT 10",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4Q6CVQSvv4vsSx3.a0e54a3010e2 --database AgAQ7M7gXFHDiuyXgHyZLe --execute SELECT id, semana, numeroAula, linkLibras, linkAudiodescricao, ccLegenda FROM videoaulas LIMIT 10",
+  "rows": [
+    {
+      "id": "30001",
+      "semana": "1",
+      "numeroAula": "1",
+      "linkLibras": "https://youtu.be/0e54GbJT2Ik",
+      "linkAudiodescricao": "https://youtu.be/4XG5THX_1gA",
+      "ccLegenda": "0"
+    },
+    {
+      "id": "30002",
+      "semana": "1",
+      "numeroAula": "2",
+      "linkLibras": "https://youtu.be/JkDvPW5R5kQ",
+      "linkAudiodescricao": "https://youtu.be/Gm4-s_q6QPU",
+      "ccLegenda": "0"
+    },
+    {
+      "id": "30003",
+      "semana": "1",
+      "numeroAula": "3",
+      "linkLibras": "https://youtu.be/jIkkWl_cYw4",
+      "linkAudiodescricao": "https://youtu.be/maEXIXOBe18",
+      "ccLegenda": "0"
+    },
+    {
+      "id": "30004",
+      "semana": "1",
+      "numeroAula": "4",
+      "linkLibras": "https://youtu.be/sIsa0gdgMQM",
+      "linkAudiodescricao": "https://youtu.be/LPYenT2NFWg",
+      "ccLegenda": "0"
+    },
+    {
+      "id": "30005",
+      "semana": "2",
+      "numeroAula": "5",
+      "linkLibras": "https://youtu.be/l_cI0KgirWY",
+      "linkAudiodescricao": "https://youtu.be/hdiEHwo7ONA",
+      "ccLegenda": "0"
+    },
+    {
+      "id": "30006",
+      "semana": "2",
+      "numeroAula": "6",
+      "linkLibras": "https://youtu.be/pr9MTCvfWgQ",
+      "linkAudiodescricao": "https://youtu.be/bUEKcTuckuw",
+      "ccLegenda": "0"
+    },
+    {
+      "id": "30007",
+      "semana": "2",
+      "numeroAula": "7",
+      "linkLibras": "https://youtu.be/yk-FsVrLXkg",
+      "linkAudiodescricao": "https://youtu.be/y8hHsVLUy_E",
+      "ccLegenda": "0"
+    },
+    {
+      "id": "30008",
+      "semana": "2",
+      "numeroAula": "8",
+      "linkLibras": "https://youtu.be/F8agumyEYMM",
+      "linkAudiodescricao": "https://youtu.be/Ec2UaO0AoqE",
+      "ccLegenda": "0"
+    },
+    {
+      "id": "30009",
+      "semana": "2",
+      "numeroAula": "9",
+      "linkLibras": "https://youtu.be/oxKcQLyjal8",
+      "linkAudiodescricao": "https://youtu.be/hqub-pQTM30",
+      "ccLegenda": "0"
+    },
+    {
+      "id": "30010",
+      "semana": "3",
+      "numeroAula": "10",
+      "linkLibras": "https://youtu.be/uNjJlt6fcsU",
+      "linkAudiodescricao": "https://youtu.be/_ztFWKHd5zE",
+      "ccLegenda": "0"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tsemana\tnumeroAula\tlinkLibras\tlinkAudiodescricao\tccLegenda\n30001\t1\t1\thttps://youtu.be/0e54GbJT2Ik\thttps://youtu.be/4XG5THX_1gA\t0\n30002\t1\t2\thttps://youtu.be/JkDvPW5R5kQ\thttps://youtu.be/Gm4-s_q6QPU\t0\n30003\t1\t3\thttps://youtu.be/jIkkWl_cYw4\thttps://youtu.be/maEXIXOBe18\t0\n30004\t1\t4\thttps://youtu.be/sIsa0gdgMQM\thttps://youtu.be/LPYenT2NFWg\t0\n30005\t2\t5\thttps://youtu.be/l_cI0KgirWY\thttps://youtu.be/hdiEHwo7ONA\t0\n30006\t2\t6\thttps://youtu.be/pr9MTCvfWgQ\thttps://youtu.be/bUEKcTuckuw\t0\n30007\t2\t7\thttps://youtu.be/yk-FsVrLXkg\thttps://youtu.be/y8hHsVLUy_E\t0\n30008\t2\t8\thttps://youtu.be/F8agumyEYMM\thttps://youtu.be/Ec2UaO0AoqE\t0\n30009\t2\t9\thttps://youtu.be/oxKcQLyjal8\thttps://youtu.be/hqub-pQTM30\t0\n30010\t3\t10\thttps://youtu.be/uNjJlt6fcsU\thttps://youtu.be/_ztFWKHd5zE\t0\n",
+  "stderr": "",
+  "execution_time_ms": 1571
+}

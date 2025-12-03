@@ -172,14 +172,27 @@ export async function getAllOfertasDisciplinas() {
 // ============= VIDEOAULAS =============
 
 export async function getAllVideoaulas() {
-  const { data, error } = await supabase
-    .from('videoaulas')
-    .select('*')
-    .order('id', { ascending: false })
-    .limit(10000);
+  // Buscar TODAS as videoaulas sem limite
+  let allData: any[] = [];
+  let from = 0;
+  const batchSize = 1000;
   
-  if (error) throw error;
-  return data;
+  while (true) {
+    const { data, error } = await supabase
+      .from('videoaulas')
+      .select('*')
+      .order('id', { ascending: false })
+      .range(from, from + batchSize - 1);
+    
+    if (error) throw error;
+    if (!data || data.length === 0) break;
+    
+    allData = allData.concat(data);
+    if (data.length < batchSize) break;
+    from += batchSize;
+  }
+  
+  return allData;
 }
 
 export async function getVideoaulaById(id: number) {
@@ -262,18 +275,27 @@ export async function getDisciplinasComCurso() {
 // ============= ESTATÍSTICAS =============
 
 export async function getEstatisticas() {
+  // Buscar todos os dados para contar corretamente
   const [videoaulas, disciplinas, cursos, professores] = await Promise.all([
-    supabase.from('videoaulas').select('*', { count: 'exact', head: true }),
-    supabase.from('disciplinas').select('*', { count: 'exact', head: true }),
-    supabase.from('cursos').select('*', { count: 'exact', head: true }),
-    supabase.from('professores').select('*', { count: 'exact', head: true }),
+    getAllVideoaulas(),
+    getAllDisciplinas(),
+    getAllCursos(),
+    getAllProfessores(),
   ]);
 
+  // Contar videoaulas com acessibilidade
+  const comLibras = videoaulas.filter((v: any) => v.linkLibras && v.linkLibras !== '').length;
+  const comAudiodescricao = videoaulas.filter((v: any) => v.linkAudiodescricao && v.linkAudiodescricao !== '').length;
+  const comCC = videoaulas.filter((v: any) => v.ccLegenda === true).length;
+
   return {
-    totalVideoaulas: videoaulas.count || 0,
-    totalDisciplinas: disciplinas.count || 0,
-    totalCursos: cursos.count || 0,
-    totalProfessores: professores.count || 0,
+    totalVideoaulas: videoaulas.length,
+    totalDisciplinas: disciplinas.length,
+    totalCursos: cursos.length,
+    totalProfessores: professores.length,
+    comLibras,
+    comAudiodescricao,
+    comCC,
   };
 }
 
