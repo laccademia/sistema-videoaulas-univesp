@@ -8,46 +8,46 @@ import * as SupabaseAuth from "./supabase-auth";
 import { getDb } from "./db";
 import { disciplinas, videoaulas, ofertasDisciplinas, cursosDisciplinas, historicoImportacoes, users } from "../drizzle/schema";
 import { eq, and, desc } from "drizzle-orm";
-// Imports para leitura pública (Supabase)
+// Imports do Supabase (leitura + CRUD)
 import {
   getAllCursos,
   getCursoById,
   getDisciplinasByCursoId,
   getAllDisciplinas,
-  getDisciplinaByCodigo,
   getAllProfessores,
-  getProfessorByNome,
-  getAllDesignersInstrucionais,
-  getDesignerInstrucionalByNome,
+  getAllDesigners,
   getVideoaulasComDetalhes,
   getVideoaulaById,
   getDisciplinasComCurso,
-  getEstatisticasGerais,
-} from "./supabase-adapter";
-
-// Imports para painel administrativo (Manus)
-import {
+  getEstatisticas,
+  getVideoaulasPorCurso,
+  getVideoaulasPorAno,
+  getVideoaulasPorAnoBimestre,
+  getAllOfertasDisciplinas,
+  getOrCreateOfertaDisciplina,
+  // CRUD
   createVideoaula,
   updateVideoaula,
   deleteVideoaula,
-  getOrCreateOfertaDisciplina,
-  createProfessor,
-  updateProfessor,
-  deleteProfessor,
-  getProfessorById as getManusProf,
   createDisciplina,
   updateDisciplina,
   deleteDisciplina,
-  getDisciplinaById as getManusDisciplina,
-  createDesignerInstrucional,
-  updateDesignerInstrucional,
-  deleteDesignerInstrucional,
-  getDesignerInstrucionalById as getManusDesigner,
   createCurso,
   updateCurso,
   deleteCurso,
-  getCursoById as getManusCurso,
-} from "./db";
+  createProfessor,
+  updateProfessor,
+  deleteProfessor,
+  createDesigner,
+  updateDesigner,
+  deleteDesigner,
+  getDisciplinaById,
+  getDisciplinaByCodigo,
+  getProfessorById,
+  getProfessorByNome,
+  getDesignerById,
+  getDesignerByNome,
+} from "./supabase-db";
 
 export const appRouter = router({
   system: systemRouter,
@@ -193,13 +193,13 @@ export const appRouter = router({
   // ============================================
   dis: router({
     list: publicProcedure.query(async () => {
-      return await getAllDesignersInstrucionais();
+      return await getAllDesigners();
     }),
     
     getByNome: publicProcedure
       .input(z.object({ nome: z.string() }))
       .query(async ({ input }) => {
-        return await getDesignerInstrucionalByNome(input.nome);
+        return await getDesignerByNome(input.nome);
       }),
   }),
 
@@ -315,7 +315,7 @@ export const appRouter = router({
   // ============================================
   stats: router({
     overview: publicProcedure.query(async () => {
-      return await getEstatisticasGerais();
+      return await getEstatisticas();
     }),
     
     porCurso: publicProcedure.query(async () => {
@@ -579,7 +579,7 @@ export const appRouter = router({
       getById: publicProcedure
         .input(z.object({ id: z.number() }))
         .query(async ({ input }) => {
-          return await getManusProf(input.id);
+          return await getProfessorById(input.id);
         }),
     }),
 
@@ -589,10 +589,13 @@ export const appRouter = router({
           codigo: z.string().min(1),
           nome: z.string().min(1),
           cargaHoraria: z.number(),
+          anoCurso: z.number().nullable().optional(),
+          bimestrePedagogico: z.number().nullable().optional(),
           cursoIds: z.array(z.number()),
         }))
         .mutation(async ({ input }) => {
-          await createDisciplina(input);
+          const { cursoIds, ...disciplinaData } = input;
+          await createDisciplina(disciplinaData, cursoIds);
           return { success: true };
         }),
 
@@ -602,15 +605,13 @@ export const appRouter = router({
           codigo: z.string().min(1),
           nome: z.string().min(1),
           cargaHoraria: z.number(),
+          anoCurso: z.number().nullable().optional(),
+          bimestrePedagogico: z.number().nullable().optional(),
           cursoIds: z.array(z.number()),
         }))
         .mutation(async ({ input }) => {
-          await updateDisciplina(input.id, {
-            codigo: input.codigo,
-            nome: input.nome,
-            cargaHoraria: input.cargaHoraria,
-            cursoIds: input.cursoIds,
-          });
+          const { id, cursoIds, ...disciplinaData } = input;
+          await updateDisciplina(id, disciplinaData, cursoIds);
           return { success: true };
         }),
 
@@ -624,7 +625,7 @@ export const appRouter = router({
       getById: publicProcedure
         .input(z.object({ id: z.number() }))
         .query(async ({ input }) => {
-          return await getManusDisciplina(input.id);
+          return await getDisciplinaById(input.id);
         }),
     }),
 
@@ -634,7 +635,7 @@ export const appRouter = router({
           nome: z.string().min(1),
         }))
         .mutation(async ({ input }) => {
-          await createDesignerInstrucional(input);
+          await createDesigner(input);
           return { success: true };
         }),
 
@@ -644,21 +645,21 @@ export const appRouter = router({
           nome: z.string().min(1),
         }))
         .mutation(async ({ input }) => {
-          await updateDesignerInstrucional(input.id, { nome: input.nome });
+          await updateDesigner(input.id, { nome: input.nome });
           return { success: true };
         }),
 
       delete: publicProcedure
         .input(z.object({ id: z.number() }))
         .mutation(async ({ input }) => {
-          await deleteDesignerInstrucional(input.id);
+          await deleteDesigner(input.id);
           return { success: true };
         }),
 
       getById: publicProcedure
         .input(z.object({ id: z.number() }))
         .query(async ({ input }) => {
-          return await getManusDesigner(input.id);
+          return await getDesignerById(input.id);
         }),
     }),
 
@@ -980,7 +981,7 @@ export const appRouter = router({
         getAllCursos(),
         getAllDisciplinas(),
         getAllProfessores(),
-        getAllDesignersInstrucionais(),
+        getAllDesigners(),
         getVideoaulasComDetalhes(),
         db.select().from(cursosDisciplinas),
         db.select().from(ofertasDisciplinas),

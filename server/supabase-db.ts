@@ -56,6 +56,17 @@ export async function getDisciplinaById(id: number) {
   return data;
 }
 
+export async function getDisciplinaByCodigo(codigo: string) {
+  const { data, error } = await supabase
+    .from('disciplinas')
+    .select('*')
+    .eq('codigo', codigo)
+    .single();
+  
+  if (error) throw error;
+  return data;
+}
+
 // ============= CURSOS-DISCIPLINAS =============
 
 export async function getCursosDisciplinas() {
@@ -93,6 +104,27 @@ export async function getAllProfessores() {
   return data;
 }
 
+export async function getProfessorById(id: number) {
+  const { data, error } = await supabase
+    .from('professores')
+    .select('*')
+    .eq('id', id)
+    .single();
+  
+  if (error) throw error;
+  return data;
+}
+
+export async function getProfessorByNome(nome: string) {
+  const { data, error } = await supabase
+    .from('professores')
+    .select('*')
+    .ilike('nome', `%${nome}%`);
+  
+  if (error) throw error;
+  return data;
+}
+
 // ============= DESIGNERS =============
 
 export async function getAllDesigners() {
@@ -100,6 +132,27 @@ export async function getAllDesigners() {
     .from('designersInstrucionais')
     .select('*')
     .order('nome', { ascending: true });
+  
+  if (error) throw error;
+  return data;
+}
+
+export async function getDesignerById(id: number) {
+  const { data, error } = await supabase
+    .from('designersInstrucionais')
+    .select('*')
+    .eq('id', id)
+    .single();
+  
+  if (error) throw error;
+  return data;
+}
+
+export async function getDesignerByNome(nome: string) {
+  const { data, error } = await supabase
+    .from('designersInstrucionais')
+    .select('*')
+    .ilike('nome', `%${nome}%`);
   
   if (error) throw error;
   return data;
@@ -288,4 +341,338 @@ export async function getVideoaulasPorAnoBimestre() {
     bim3: bimestres[3] || 0,
     bim4: bimestres[4] || 0,
   })).sort((a, b) => a.ano - b.ano);
+}
+
+// ============= OFERTAS DISCIPLINAS (CRUD) =============
+
+export async function getOrCreateOfertaDisciplina(
+  disciplinaId: number,
+  ano: number,
+  bimestreOperacional: number,
+  professorId?: number,
+  diId?: number
+) {
+  // Buscar oferta existente
+  const { data: ofertas, error: searchError } = await supabase
+    .from('ofertasDisciplinas')
+    .select('*')
+    .eq('disciplinaId', disciplinaId)
+    .eq('ano', ano)
+    .eq('bimestreOperacional', bimestreOperacional);
+  
+  if (searchError) throw searchError;
+
+  // Se encontrou, retornar o ID
+  if (ofertas && ofertas.length > 0) {
+    return ofertas[0].id;
+  }
+
+  // Se não encontrou, criar nova oferta
+  const { data: novaOferta, error: insertError } = await supabase
+    .from('ofertasDisciplinas')
+    .insert({
+      disciplinaId,
+      ano,
+      bimestreOperacional,
+      professorId: professorId || null,
+      diId: diId || null,
+      tipo: 'regular',
+    })
+    .select()
+    .single();
+  
+  if (insertError) throw insertError;
+  return novaOferta.id;
+}
+
+// ============= CRUD VIDEOAULAS =============
+
+export async function createVideoaula(data: {
+  ofertaDisciplinaId: number;
+  semana: number | null;
+  numeroAula: number | null;
+  titulo: string;
+  sinopse: string | null;
+  linkYoutubeOriginal: string | null;
+  slidesDisponivel: boolean;
+  status: string | null;
+  idTvCultura: string | null;
+  duracaoMinutos: number | null;
+  linkLibras: string | null;
+  linkAudiodescricao: string | null;
+  ccLegenda: boolean;
+  linkDownload: string | null;
+}) {
+  const { data: videoaula, error } = await supabase
+    .from('videoaulas')
+    .insert(data)
+    .select()
+    .single();
+  
+  if (error) throw error;
+  return videoaula;
+}
+
+export async function updateVideoaula(id: number, data: {
+  ofertaDisciplinaId?: number;
+  semana?: number | null;
+  numeroAula?: number | null;
+  titulo?: string;
+  sinopse?: string | null;
+  linkYoutubeOriginal?: string | null;
+  slidesDisponivel?: boolean;
+  status?: string;
+  idTvCultura?: string | null;
+  duracaoMinutos?: number | null;
+  linkLibras?: string | null;
+  linkAudiodescricao?: string | null;
+  ccLegenda?: boolean;
+  linkDownload?: string | null;
+}) {
+  const { data: videoaula, error } = await supabase
+    .from('videoaulas')
+    .update(data)
+    .eq('id', id)
+    .select()
+    .single();
+  
+  if (error) throw error;
+  return videoaula;
+}
+
+export async function deleteVideoaula(id: number) {
+  const { error } = await supabase
+    .from('videoaulas')
+    .delete()
+    .eq('id', id);
+  
+  if (error) throw error;
+  return { success: true };
+}
+
+// ============= CRUD DISCIPLINAS =============
+
+export async function createDisciplina(data: {
+  codigo: string;
+  nome: string;
+  cargaHoraria: number;
+  anoCurso?: number | null;
+  bimestrePedagogico?: number | null;
+}, cursoIds: number[]) {
+  // Inserir disciplina
+  const { data: disciplina, error: disciplinaError } = await supabase
+    .from('disciplinas')
+    .insert(data)
+    .select()
+    .single();
+  
+  if (disciplinaError) throw disciplinaError;
+
+  // Inserir associações com cursos
+  if (cursoIds.length > 0) {
+    const associacoes = cursoIds.map(cursoId => ({
+      cursoId,
+      disciplinaId: disciplina.id,
+    }));
+
+    const { error: associacoesError } = await supabase
+      .from('cursosDisciplinas')
+      .insert(associacoes);
+    
+    if (associacoesError) throw associacoesError;
+  }
+  
+  return disciplina;
+}
+
+export async function updateDisciplina(id: number, data: {
+  codigo?: string;
+  nome?: string;
+  cargaHoraria?: number;
+  anoCurso?: number | null;
+  bimestrePedagogico?: number | null;
+}, cursoIds?: number[]) {
+  // Atualizar disciplina
+  const { data: disciplina, error: disciplinaError } = await supabase
+    .from('disciplinas')
+    .update(data)
+    .eq('id', id)
+    .select()
+    .single();
+  
+  if (disciplinaError) throw disciplinaError;
+
+  // Se cursoIds foi fornecido, atualizar associações
+  if (cursoIds !== undefined) {
+    // Remover associações antigas
+    const { error: deleteError } = await supabase
+      .from('cursosDisciplinas')
+      .delete()
+      .eq('disciplinaId', id);
+    
+    if (deleteError) throw deleteError;
+
+    // Inserir novas associações
+    if (cursoIds.length > 0) {
+      const associacoes = cursoIds.map(cursoId => ({
+        cursoId,
+        disciplinaId: id,
+      }));
+
+      const { error: insertError } = await supabase
+        .from('cursosDisciplinas')
+        .insert(associacoes);
+      
+      if (insertError) throw insertError;
+    }
+  }
+  
+  return disciplina;
+}
+
+export async function deleteDisciplina(id: number) {
+  // Remover associações com cursos primeiro
+  const { error: deleteAssocError } = await supabase
+    .from('cursosDisciplinas')
+    .delete()
+    .eq('disciplinaId', id);
+  
+  if (deleteAssocError) throw deleteAssocError;
+
+  // Remover disciplina
+  const { error } = await supabase
+    .from('disciplinas')
+    .delete()
+    .eq('id', id);
+  
+  if (error) throw error;
+  return { success: true };
+}
+
+// ============= CRUD CURSOS =============
+
+export async function createCurso(data: {
+  eixo: string;
+  nome: string;
+}) {
+  const { data: curso, error } = await supabase
+    .from('cursos')
+    .insert(data)
+    .select()
+    .single();
+  
+  if (error) throw error;
+  return curso;
+}
+
+export async function updateCurso(id: number, data: {
+  eixo?: string;
+  nome?: string;
+}) {
+  const { data: curso, error } = await supabase
+    .from('cursos')
+    .update(data)
+    .eq('id', id)
+    .select()
+    .single();
+  
+  if (error) throw error;
+  return curso;
+}
+
+export async function deleteCurso(id: number) {
+  // Remover associações com disciplinas primeiro
+  const { error: deleteAssocError } = await supabase
+    .from('cursosDisciplinas')
+    .delete()
+    .eq('cursoId', id);
+  
+  if (deleteAssocError) throw deleteAssocError;
+
+  // Remover curso
+  const { error } = await supabase
+    .from('cursos')
+    .delete()
+    .eq('id', id);
+  
+  if (error) throw error;
+  return { success: true };
+}
+
+// ============= CRUD PROFESSORES =============
+
+export async function createProfessor(data: {
+  nome: string;
+}) {
+  const { data: professor, error } = await supabase
+    .from('professores')
+    .insert(data)
+    .select()
+    .single();
+  
+  if (error) throw error;
+  return professor;
+}
+
+export async function updateProfessor(id: number, data: {
+  nome?: string;
+}) {
+  const { data: professor, error } = await supabase
+    .from('professores')
+    .update(data)
+    .eq('id', id)
+    .select()
+    .single();
+  
+  if (error) throw error;
+  return professor;
+}
+
+export async function deleteProfessor(id: number) {
+  const { error } = await supabase
+    .from('professores')
+    .delete()
+    .eq('id', id);
+  
+  if (error) throw error;
+  return { success: true };
+}
+
+// ============= CRUD DESIGNERS INSTRUCIONAIS =============
+
+export async function createDesigner(data: {
+  nome: string;
+}) {
+  const { data: designer, error } = await supabase
+    .from('designersInstrucionais')
+    .insert(data)
+    .select()
+    .single();
+  
+  if (error) throw error;
+  return designer;
+}
+
+export async function updateDesigner(id: number, data: {
+  nome?: string;
+}) {
+  const { data: designer, error } = await supabase
+    .from('designersInstrucionais')
+    .update(data)
+    .eq('id', id)
+    .select()
+    .single();
+  
+  if (error) throw error;
+  return designer;
+}
+
+export async function deleteDesigner(id: number) {
+  const { error } = await supabase
+    .from('designersInstrucionais')
+    .delete()
+    .eq('id', id);
+  
+  if (error) throw error;
+  return { success: true };
 }

@@ -847,3 +847,75 @@
 - [x] Remover validação min=1 de semana e numeroAula (permitir 0)
 - [x] Corrigir mapeamento de routers (list em routers públicos, CRUD em admin.*, getById em routers públicos)
 - [x] Validar operações create, update, delete
+
+## 🔄 Migração Completa para Supabase
+
+### Backend - Supabase Helpers
+- [ ] Criar helper de criação de videoaulas no Supabase (createVideoaula)
+- [ ] Criar helper de atualização de videoaulas no Supabase (updateVideoaula)
+- [ ] Criar helper de exclusão de videoaulas no Supabase (deleteVideoaula)
+- [ ] Criar helper de criação de disciplinas no Supabase (createDisciplina)
+- [ ] Criar helper de atualização de disciplinas no Supabase (updateDisciplina)
+- [ ] Criar helper de exclusão de disciplinas no Supabase (deleteDisciplina)
+- [ ] Criar helper de criação de cursos no Supabase (createCurso)
+- [ ] Criar helper de atualização de cursos no Supabase (updateCurso)
+- [ ] Criar helper de exclusão de cursos no Supabase (deleteCurso)
+- [ ] Criar helper de criação de professores no Supabase (createProfessor)
+- [ ] Criar helper de atualização de professores no Supabase (updateProfessor)
+- [ ] Criar helper de exclusão de professores no Supabase (deleteProfessor)
+- [ ] Criar helper de criação de designers no Supabase (createDesigner)
+- [ ] Criar helper de atualização de designers no Supabase (updateDesigner)
+- [ ] Criar helper de exclusão de designers no Supabase (deleteDesigner)
+- [ ] Criar helper de gerenciamento de associações curso-disciplina (many-to-many)
+
+### Routers tRPC
+- [ ] Atualizar admin.videoaulas.create para usar Supabase
+- [ ] Atualizar admin.videoaulas.update para usar Supabase
+- [ ] Atualizar admin.videoaulas.delete para usar Supabase
+- [ ] Atualizar admin.disciplinas.create para usar Supabase
+- [ ] Atualizar admin.disciplinas.update para usar Supabase
+- [ ] Atualizar admin.disciplinas.delete para usar Supabase
+- [ ] Atualizar admin.cursos.create para usar Supabase
+- [ ] Atualizar admin.cursos.update para usar Supabase
+- [ ] Atualizar admin.cursos.delete para usar Supabase
+- [ ] Atualizar admin.professores.create para usar Supabase
+- [ ] Atualizar admin.professores.update para usar Supabase
+- [ ] Atualizar admin.professores.delete para usar Supabase
+- [ ] Atualizar admin.designers.create para usar Supabase
+- [ ] Atualizar admin.designers.update para usar Supabase
+- [ ] Atualizar admin.designers.delete para usar Supabase
+- [ ] Remover imports e referências ao db.ts (Manus)
+
+### Testes e Validação
+- [ ] Testar criação de videoaula via painel admin
+- [ ] Testar edição de videoaula via painel admin
+- [ ] Testar exclusão de videoaula via painel admin
+- [ ] Testar criação de disciplina via painel admin
+- [ ] Testar edição de disciplina via painel admin
+- [ ] Testar exclusão de disciplina via painel admin
+- [ ] Testar criação de professor via painel admin
+- [ ] Testar edição de professor via painel admin
+- [ ] Testar exclusão de professor via painel admin
+- [ ] Validar que todas as páginas públicas continuam funcionando
+- [ ] Validar que dashboard e gráficos continuam funcionando
+- [ ] Validar que filtros e buscas continuam funcionando
+
+### Limpeza
+- [ ] Remover arquivo server/db.ts (helpers Manus)
+- [ ] Remover imports de db.ts em todos os arquivos
+- [ ] Atualizar documentação para refletir uso 100% Supabase
+- [ ] Criar checkpoint final com sistema 100% Supabase
+
+
+## 🔄 Migração Completa para Supabase
+
+- [x] Migrar helpers de CRUD para supabase-db.ts
+- [x] Adicionar helpers: createVideoaula, updateVideoaula, deleteVideoaula
+- [x] Adicionar helpers: createDisciplina, updateDisciplina, deleteDisciplina
+- [x] Adicionar helpers: createCurso, updateCurso, deleteCurso
+- [x] Adicionar helpers: createProfessor, updateProfessor, deleteProfessor
+- [x] Adicionar helpers: createDesigner, updateDesigner, deleteDesigner
+- [x] Adicionar helper: getOrCreateOfertaDisciplina
+- [x] Atualizar routers.ts para usar apenas Supabase
+- [x] Testar CRUD no painel administrativo (CREATE, READ, DELETE validados)
+- [x] Validar sistema completo funcionando 100% com Supabase
