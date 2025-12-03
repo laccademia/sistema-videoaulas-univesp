@@ -1,0 +1,130 @@
+{
+  "query": "SELECT id, nome FROM professores ORDER BY id LIMIT 30",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4Q6CVQSvv4vsSx3.a0e54a3010e2 --database AgAQ7M7gXFHDiuyXgHyZLe --execute SELECT id, nome FROM professores ORDER BY id LIMIT 30",
+  "rows": [
+    {
+      "id": "60001",
+      "nome": "Ana Claudia Fernandes Gomes"
+    },
+    {
+      "id": "60002",
+      "nome": "Andresa Cristina Brascero de Souza"
+    },
+    {
+      "id": "60003",
+      "nome": "Antonio Carlos de Alcantara Thimoteo"
+    },
+    {
+      "id": "60004",
+      "nome": "Celso Pessanha Machado"
+    },
+    {
+      "id": "60005",
+      "nome": "Cristhof Johann Roosen Runge"
+    },
+    {
+      "id": "60006",
+      "nome": "Cristina Bressaglia Lucon"
+    },
+    {
+      "id": "60007",
+      "nome": "Janaina da Costa Pereira Torres de Oliveira"
+    },
+    {
+      "id": "60008",
+      "nome": "João Carlos Barreto"
+    },
+    {
+      "id": "60009",
+      "nome": "Luciana Oranges Cezarino"
+    },
+    {
+      "id": "60010",
+      "nome": "Otavio Jose De Oliveira"
+    },
+    {
+      "id": "60011",
+      "nome": "Prof. Adriana Batista de Souza Koide"
+    },
+    {
+      "id": "60012",
+      "nome": "Prof. Anibal Tavares de Azevedo"
+    },
+    {
+      "id": "60013",
+      "nome": "Prof. Antônio Nunes Pereira"
+    },
+    {
+      "id": "60014",
+      "nome": "Prof. Eduardo Ferro"
+    },
+    {
+      "id": "60015",
+      "nome": "Prof. João Barreto"
+    },
+    {
+      "id": "60016",
+      "nome": "Prof. Marcelo Meratti"
+    },
+    {
+      "id": "60017",
+      "nome": "Prof. Paulo Henrique Trentin"
+    },
+    {
+      "id": "60018",
+      "nome": "Prof. Pedro Ivo Camacho Alves Salvador"
+    },
+    {
+      "id": "60019",
+      "nome": "Prof. Renato da Costa"
+    },
+    {
+      "id": "60020",
+      "nome": "Prof. Roberto Funes"
+    },
+    {
+      "id": "60021",
+      "nome": "Profa. Janaina da Costa Pereira Torres de Oliveira"
+    },
+    {
+      "id": "60022",
+      "nome": "Profa. Karina Maldonado"
+    },
+    {
+      "id": "60023",
+      "nome": "Profa. Katia Hale dos Santos"
+    },
+    {
+      "id": "60024",
+      "nome": "Profa. Keite Silva De Melo"
+    },
+    {
+      "id": "60025",
+      "nome": "Profa. Luciana Oranges Cezarino"
+    },
+    {
+      "id": "60026",
+      "nome": "Profa. Silvia Regina Vieira Da Silva"
+    },
+    {
+      "id": "60027",
+      "nome": "Rogerio Monteiro"
+    },
+    {
+      "id": "60028",
+      "nome": "Saul Cabral Gomes Junior"
+    },
+    {
+      "id": "60029",
+      "nome": "Sirlei Aparecida de Oliveira Bubnoff"
+    },
+    {
+      "id": "90001",
+      "nome": "Luiz Eduardo Galvão Martins"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tnome\n60001\tAna Claudia Fernandes Gomes\n60002\tAndresa Cristina Brascero de Souza\n60003\tAntonio Carlos de Alcantara Thimoteo\n60004\tCelso Pessanha Machado\n60005\tCristhof Johann Roosen Runge\n60006\tCristina Bressaglia Lucon\n60007\tJanaina da Costa Pereira Torres de Oliveira\n60008\tJoão Carlos Barreto\n60009\tLuciana Oranges Cezarino\n60010\tOtavio Jose De Oliveira\n60011\tProf. Adriana Batista de Souza Koide\n60012\tProf. Anibal Tavares de Azevedo\n60013\tProf. Antônio Nunes Pereira\n60014\tProf. Eduardo Ferro\n60015\tProf. João Barreto\n60016\tProf. Marcelo Meratti\n60017\tProf. Paulo Henrique Trentin\n60018\tProf. Pedro Ivo Camacho Alves Salvador\n60019\tProf. Renato da Costa\n60020\tProf. Roberto Funes\n60021\tProfa. Janaina da Costa Pereira Torres de Oliveira\n60022\tProfa. Karina Maldonado\n60023\tProfa. Katia Hale dos Santos\n60024\tProfa. Keite Silva De Melo\n60025\tProfa. Luciana Oranges Cezarino\n60026\tProfa. Silvia Regina Vieira Da Silva\n60027\tRogerio Monteiro\n60028\tSaul Cabral Gomes Junior\n60029\tSirlei Aparecida de Oliveira Bubnoff\n90001\tLuiz Eduardo Galvão Martins\n",
+  "stderr": "",
+  "execution_time_ms": 163
+}

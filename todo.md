@@ -966,3 +966,11 @@
 - [x] Adicionar semana e número das videoaulas nas listagens
 - [x] Validar queries do Supabase
 - [x] Testar todas as correções
+
+
+## 🔧 Correção Página de Professores
+
+- [x] Investigar por que a página Professores mostra números em vez de nomes
+- [x] Corrigir exibição dos cards de professores (deletados 20 registros inválidos)
+- [x] Validar que todos os nomes estão sendo exibidos corretamente
+- [x] Testar página completa
