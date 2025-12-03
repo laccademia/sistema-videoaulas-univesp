@@ -936,10 +936,10 @@
 
 ## 🐙 Publicação no GitHub
 
-- [ ] Verificar se repositório já existe no GitHub
-- [ ] Criar .gitignore apropriado
-- [ ] Fazer commit inicial de todos os arquivos
-- [ ] Criar repositório no GitHub via gh CLI
-- [ ] Fazer push para o repositório remoto
-- [ ] Adicionar README.md com instruções de setup
+- [x] Verificar se repositório já existe no GitHub
+- [x] Criar .gitignore apropriado
+- [x] Fazer commit inicial de todos os arquivos
+- [x] Criar repositório no GitHub via gh CLI
+- [x] Fazer push para o repositório remoto (laccademia/sistema-videoaulas-univesp)
+- [x] Adicionar README.md com instruções de setup
 - [ ] Criar checkpoint final
